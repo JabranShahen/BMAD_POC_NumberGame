@@ -1,12 +1,13 @@
-import '../../domain/entities/puzzle_entity.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart' show rootBundle;
+import '../../../../shared/models/puzzle.dart';
 
-/// Data model for puzzle persistence and API
+/// JSON-compatible puzzle model
 class PuzzleModel {
   final String id;
   final List<int> sequence;
   final int missingIndex;
   final String difficulty;
-  final DateTime generatedAt;
   final List<int> options;
 
   PuzzleModel({
@@ -15,94 +16,75 @@ class PuzzleModel {
     required this.missingIndex,
     required this.difficulty,
     required this.options,
-    DateTime? generatedAt,
-  }) : generatedAt = generatedAt ?? DateTime.now();
+  });
 
-  /// Converts to domain entity
-  PuzzleEntity toEntity() {
-    return PuzzleEntity(
+  factory PuzzleModel.fromJson(Map<String, dynamic> json) {
+    return PuzzleModel(
+      id: json['id'],
+      sequence: List<int>.from(json['sequence']),
+      missingIndex: json['missingIndex'],
+      difficulty: json['difficulty'],
+      options: List<int>.from(json['options']),
+    );
+  }
+
+  /// Convert to domain Puzzle entity
+  Puzzle toPuzzle() {
+    return Puzzle(
+      id: id,
       sequence: sequence,
       missingIndex: missingIndex,
-      difficulty: _difficultyFromString(difficulty),
+      difficulty: _parseDifficulty(difficulty),
       options: options,
     );
   }
 
-  /// Creates from domain entity
-  factory PuzzleModel.fromEntity(PuzzleEntity entity, String id) {
-    return PuzzleModel(
-      id: id,
-      sequence: entity.sequence,
-      missingIndex: entity.missingIndex,
-      difficulty: entity.difficulty.name,
-      options: entity.options,
-      generatedAt: DateTime.now(),
-    );
-  }
-
-  /// Creates from JSON
-  factory PuzzleModel.fromJson(Map<String, dynamic> json) {
-    return PuzzleModel(
-      id: json['id'] as String,
-      sequence: List<int>.from(json['sequence'] as List),
-      missingIndex: json['missingIndex'] as int,
-      difficulty: json['difficulty'] as String,
-      options: List<int>.from(json['options'] as List),
-      generatedAt: DateTime.parse(json['generatedAt'] as String),
-    );
-  }
-
-  /// Converts to JSON
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'sequence': sequence,
-      'missingIndex': missingIndex,
-      'difficulty': difficulty,
-      'options': options,
-      'generatedAt': generatedAt.toIso8601String(),
-    };
-  }
-
-  Difficulty _difficultyFromString(String difficultyStr) {
-    return Difficulty.values.firstWhere(
-      (d) => d.name == difficultyStr,
-      orElse: () => Difficulty.medium,
-    );
+  DifficultyLevel _parseDifficulty(String difficulty) {
+    switch (difficulty.toLowerCase()) {
+      case 'easy':
+        return DifficultyLevel.easy;
+      case 'medium':
+        return DifficultyLevel.medium;
+      case 'hard':
+        return DifficultyLevel.hard;
+      default:
+        return DifficultyLevel.medium;
+    }
   }
 }
 
-/// Model for storing puzzle attempts
-class PuzzleAttemptModel {
-  final String puzzleId;
-  final int selectedAnswer;
-  final int timeTakenMs;
-  final DateTime attemptedAt;
+/// Repository for loading puzzles from JSON
+class PuzzleRepository {
+  static const String _puzzlesAssetPath = 'assets/puzzles.json';
+  List<PuzzleModel>? _cachedPuzzles;
 
-  PuzzleAttemptModel({
-    required this.puzzleId,
-    required this.selectedAnswer,
-    required this.timeTakenMs,
-    DateTime? attemptedAt,
-  }) : attemptedAt = attemptedAt ?? DateTime.now();
+  /// Load all puzzles from JSON asset
+  Future<List<PuzzleModel>> _loadPuzzles() async {
+    if (_cachedPuzzles != null) return _cachedPuzzles!;
 
-  /// Creates from JSON
-  factory PuzzleAttemptModel.fromJson(Map<String, dynamic> json) {
-    return PuzzleAttemptModel(
-      puzzleId: json['puzzleId'] as String,
-      selectedAnswer: json['selectedAnswer'] as int,
-      timeTakenMs: json['timeTakenMs'] as int,
-      attemptedAt: DateTime.parse(json['attemptedAt'] as String),
-    );
+    final jsonString = await rootBundle.loadString(_puzzlesAssetPath);
+    final jsonData = json.decode(jsonString) as List<dynamic>;
+
+    _cachedPuzzles = jsonData.map((json) => PuzzleModel.fromJson(json)).toList();
+    return _cachedPuzzles!;
   }
 
-  /// Converts to JSON
-  Map<String, dynamic> toJson() {
-    return {
-      'puzzleId': puzzleId,
-      'selectedAnswer': selectedAnswer,
-      'timeTakenMs': timeTakenMs,
-      'attemptedAt': attemptedAt.toIso8601String(),
-    };
+  /// Get a random puzzle of matching difficulty
+  Future<Puzzle> getRandomPuzzle(DifficultyLevel difficulty) async {
+    final allPuzzles = await _loadPuzzles();
+    final matchingPuzzles = allPuzzles.where((p) => p.difficulty == difficulty.name).toList();
+
+    if (matchingPuzzles.isEmpty) {
+      throw Exception('No puzzles found for difficulty: ${difficulty.name}');
+    }
+
+    matchingPuzzles.shuffle(); // Randomize order
+    return matchingPuzzles.first.toPuzzle();
+  }
+
+  /// Get all puzzles (for debugging/testing)
+  Future<List<Puzzle>> getAllPuzzles() async {
+    final models = await _loadPuzzles();
+    return models.map((m) => m.toPuzzle()).toList();
   }
 }
