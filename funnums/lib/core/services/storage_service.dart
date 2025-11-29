@@ -9,6 +9,7 @@ class StorageService {
   Box<dynamic>? _box;
 
   Future<void> initialize() async {
+    if (_box != null && _box!.isOpen) return;
     final dir = await getApplicationDocumentsDirectory();
     await Hive.initFlutter(dir.path);
     _box = await Hive.openBox<dynamic>(_boxName);

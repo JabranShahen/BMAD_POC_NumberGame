@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 class AppTheme {
   static const Color _primary = Color(0xFF4C7CF6);
   static const Color _accent = Color(0xFFF5A524);
-  static const Color _success = Color(0xFF3CB371);
   static const Color _error = Color(0xFFE44F4F);
   static const Color _bg = Color(0xFFF8FAFC);
   static const Color _text = Color(0xFF0F172A);
@@ -14,7 +13,7 @@ class AppTheme {
         seedColor: _primary,
         primary: _primary,
         secondary: _accent,
-        background: _bg,
+        surface: _bg,
         error: _error,
       ),
       scaffoldBackgroundColor: _bg,

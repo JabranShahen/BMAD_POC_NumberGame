@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/routing.dart';
-import '../../core/services/storage_service.dart';
+import '../../core/di.dart';
 import '../../data/sources/session_repository.dart';
 
 class DifficultyScreen extends StatefulWidget {
@@ -19,7 +19,7 @@ class _DifficultyScreenState extends State<DifficultyScreen> {
   @override
   void initState() {
     super.initState();
-    _sessionRepo = SessionRepository(StorageService());
+    _sessionRepo = SessionRepository(Services.storage);
     _loadBests();
   }
 
@@ -68,11 +68,16 @@ class _DifficultyScreenState extends State<DifficultyScreen> {
                     subtitle: opt.subtitle,
                     badge: 'Best: ${opt.best}',
                     last: 'Last: ${opt.last}',
-                    onTap: () => Navigator.pushNamed(
-                      context,
-                      AppRoutes.gameplay,
-                      arguments: {'mode': opt.key},
-                    ),
+                    onTap: () async {
+                      await Navigator.pushNamed(
+                        context,
+                        AppRoutes.gameplay,
+                        arguments: {'mode': opt.key},
+                      );
+                      if (mounted) {
+                        _loadBests();
+                      }
+                    },
                   );
                 },
               ),

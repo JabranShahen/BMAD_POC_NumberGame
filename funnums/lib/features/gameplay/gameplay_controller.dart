@@ -59,15 +59,17 @@ class GameplayController {
     _loseLife();
   }
 
-  void _loadNextPuzzle() {
-    current = _puzzleService.nextPuzzle(mode);
+  void _loadNextPuzzle() async {
+    current = await _puzzleService.nextPuzzle(mode);
     onPuzzle(current!);
     _startTimer();
   }
 
   void answer(int value) {
     _timer?.cancel();
+    print('DEBUG: Selected value: $value, Expected answer: ${current?.answer}, Puzzle: ${current?.id}');
     final correct = value == current?.answer;
+    print('DEBUG: Answer is ${correct ? "CORRECT" : "WRONG"}');
     if (correct) {
       score += 1;
       _loadNextPuzzle();

@@ -1,5 +1,3 @@
-/// Simple placeholders for service wiring. Replace with a real DI pattern or
-/// provider as you add implementations.
 import '../core/services/ads_service.dart';
 import '../core/services/connectivity_service.dart';
 import '../core/services/puzzle_service.dart';

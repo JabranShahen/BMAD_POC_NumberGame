@@ -20,7 +20,7 @@ class PuzzleService {
       final difficulty = entry.key;
       final puzzleList = entry.value as List;
       
-      _puzzlePools[difficulty] = puzzleList.map((p) => Puzzle(
+      final puzzles = puzzleList.map((p) => Puzzle(
         id: p['id'],
         difficulty: difficulty,
         sequence: List<int>.from(p['sequence']),
@@ -29,14 +29,16 @@ class PuzzleService {
         answer: p['answer'],
       )).toList();
       
+      puzzles.shuffle(Random());
+      _puzzlePools[difficulty] = puzzles;
       _currentIndex[difficulty] = 0;
     }
     _loaded = true;
   }
 
-  Puzzle nextPuzzle(String difficulty) {
+  Future<Puzzle> nextPuzzle(String difficulty) async {
     if (!_loaded) {
-      loadPools();
+      await loadPools();
     }
     
     final pool = _puzzlePools[difficulty] ?? [];

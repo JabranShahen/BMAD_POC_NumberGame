@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../core/di.dart';
 import '../../core/routing.dart';
-import '../../core/services/storage_service.dart';
 import '../../data/sources/session_repository.dart';
 
 class GameOverArgs {
@@ -10,18 +10,39 @@ class GameOverArgs {
   const GameOverArgs({required this.mode, required this.score});
 }
 
-class GameOverScreen extends StatelessWidget {
+class GameOverScreen extends StatefulWidget {
   const GameOverScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  State<GameOverScreen> createState() => _GameOverScreenState();
+}
+
+class _GameOverScreenState extends State<GameOverScreen> {
+  late final SessionRepository _repo;
+  bool _saved = false;
+  late final String _mode;
+  late final int _score;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     final args = ModalRoute.of(context)?.settings.arguments as GameOverArgs?;
-    final mode = args?.mode ?? 'fun';
-    final score = args?.score ?? 0;
-    final repo = SessionRepository(StorageService());
-    // Persist last/best scores (ignore async result here for simplicity).
-    repo.saveBestScore(mode, score);
-    repo.saveLastScore(mode, score);
+    _mode = args?.mode ?? 'fun';
+    _score = args?.score ?? 0;
+    _repo = SessionRepository(Services.storage);
+    _persistOnce();
+  }
+
+  Future<void> _persistOnce() async {
+    if (_saved) return;
+    _saved = true;
+    await _repo.initialize();
+    await _repo.saveBestScore(_mode, _score);
+    await _repo.saveLastScore(_mode, _score);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Game Over'),
@@ -31,7 +52,7 @@ class GameOverScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Mode: $mode', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
+            Text('Mode: $_mode', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
             const SizedBox(height: 12),
             Card(
               child: Padding(
@@ -41,7 +62,7 @@ class GameOverScreen extends StatelessWidget {
                   children: [
                     const Text('Score', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
                     const SizedBox(height: 8),
-                    Text(score.toString(), style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
+                    Text(_score.toString(), style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
                   ],
                 ),
               ),
@@ -51,7 +72,7 @@ class GameOverScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: () => Navigator.pushReplacementNamed(context, AppRoutes.gameplay, arguments: {'mode': mode}),
+                    onPressed: () => Navigator.pushReplacementNamed(context, AppRoutes.gameplay, arguments: {'mode': _mode}),
                     child: const Text('Play again'),
                   ),
                 ),

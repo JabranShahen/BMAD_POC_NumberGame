@@ -76,6 +76,9 @@ class SettingsRepository {
   SettingsRepository(this._storage);
   final StorageService _storage;
   static const _settingsKey = 'app_settings';
+  Future<void> initialize() async {
+    await _storage.initialize();
+  }
 
   Future<AppSettings> load() async {
     final data = await _storage.readValue<Map<String, dynamic>>(_settingsKey);
