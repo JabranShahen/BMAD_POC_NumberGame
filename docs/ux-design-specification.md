@@ -23,7 +23,7 @@ Hybrid native-first approach: follow iOS HIG and Material patterns for controls 
 
 ### 2.1 Defining Experience
 
-Defining loop: choose difficulty → solve a missing-number puzzle under a visible timer → get immediate feedback → continue until lives expire → view Game Over summary (score, best, solved) → restart. Success hinges on instant comprehension (numbers legible, timer clear) and zero friction between puzzles (auto-advance on correct).
+Defining loop: choose difficulty -> solve a missing-number puzzle under a visible timer -> get immediate feedback -> continue until lives expire -> view Game Over summary (score, best, solved) -> restart. Success hinges on instant comprehension (numbers legible, timer clear) and zero friction between puzzles (auto-advance on correct).
 
 ### 2.2 Novel UX Patterns
 
@@ -33,15 +33,15 @@ None required; the loop fits standard mobile game patterns (timer, lives, score,
 
 ## 3. Visual Foundation
 
-### 3.1 Color System
+### 3.1 Color System (Sunset Punch palette)
 
-- Primary: #4C7CF6 (actions, timer ring active)  
-- Accent: #F5A524 (warnings, urgency ticks)  
-- Success: #3CB371 (correct feedback)  
+- Primary CTA: Harley Davidson Orange #D14A28 (filled buttons, key CTAs)  
+- Secondary / Ground: Seabrook #3F7BB9 with deep navy #1F2F55 for gradients/headers  
+- Accent / Badges: Nanohanacha Gold #D6A21F (Best tags), neutral #F0F2F5 for “Last”  
+- Surface / Background: Lynx White #F5F6F8; Cards white with soft shadow  
+- Text: Electromagnetic #2B2F36 on light; white on dark/gradient headers  
 - Error: #E44F4F (wrong answer, life loss)  
-- Neutral: #0F172A / #1F2937 text, #E5E7EB backgrounds, #CBD5E1 borders  
-- Optional energy accent: #7C3AED for celebratory states sparingly  
-- Tone: bright, approachable, kid-friendly; high contrast for legibility.
+- Tone: bright, approachable; maintain AA contrast for all text/icon on fills.
 
 **Interactive Visualizations:** Not generated in this pass.
 
@@ -51,7 +51,7 @@ None required; the loop fits standard mobile game patterns (timer, lives, score,
 
 ### 4.1 Chosen Design Approach
 
-Clean card-based layout with oversized numerals and prominent timer ring/bar. Portrait-only, single-column. Top bar: timer + lives + score. Middle: puzzle card with sequence and answer options. Bottom: discreet controls (sound/haptics toggle), minimal chrome. Feedback uses quick flashes and gentle haptics; avoid modal interruptions except Game Over. Ads only between sessions with a slim “Next round loading…” gate.
+Clean card-based layout with oversized numerals and prominent timer ring/bar. Portrait-only, single-column. Top bar: timer + lives + score. Middle: puzzle card with sequence and answer options. Bottom: discreet controls (sound/haptics toggle), minimal chrome. Feedback uses quick flashes and gentle haptics; avoid modal interruptions except Game Over. Ads only between sessions with a slim “Next round loading” gate. Difficulty screen uses Seabrook->deep navy gradient header, orange primary CTAs, and gold/neutral badges for Best/Last.
 
 **Interactive Mockups:** Not generated in this pass.
 
@@ -65,11 +65,11 @@ Clean card-based layout with oversized numerals and prominent timer ring/bar. Po
 1) Home: “Choose your challenge” + buttons Fun/Medium/Hard, show best and last score per mode.  
 2) Difficulty: three cards with timer hints (Fun 8s, Medium 6s, Hard 4s) and best badges. Start launches puzzle.  
 3) Puzzle: show sequence with missing slot, answer options, timer ring/bar, lives (5 hearts), score. Timer visible; expiry = mistake. Correct auto-advances; wrong animates and decrements lives.  
-4) Game Over: summary (score, best, solved count), CTAs “Play again” and “Change difficulty”.  
-5) Ads gate (between sessions): “Next round loading…”; if ad fails/offline, skip gracefully.
+4) Game Over: summary (score, best, solved count), CTAs “Play again” and “Change difficulty.”  
+5) Ads gate (between sessions): “Next round loading”; if ad fails/offline, skip gracefully.
 
 **Journey: History & Progress (MVP)**  
-1) Home → History: list per difficulty with last N scores, best, solved count.  
+1) Home -> History: list per difficulty with last N scores, best, solved count.  
 2) Empty state: “Finish a run to see your progress.”  
 3) Return CTA to play again.
 
@@ -79,7 +79,7 @@ Clean card-based layout with oversized numerals and prominent timer ring/bar. Po
 3) Link: “About ads” (explains between-session only, fail-open offline).
 
 **Journey: Offline / Ad Fail (MVP)**  
-1) Detect offline: banner “Offline—puzzles still work. Ads skipped.”  
+1) Detect offline: banner “Offline — puzzles still work. Ads skipped.”  
 2) No blocking dialogs; play flow unchanged.  
 3) When back online, ads resume between sessions.
 
@@ -89,15 +89,16 @@ Clean card-based layout with oversized numerals and prominent timer ring/bar. Po
 
 ### 6.1 Component Strategy
 
-Use native buttons, lists, modals. Custom/lightly styled components:  
-- Puzzle Card: sequence layout with missing slot; responsive to varied number widths.  
-- Timer Ring/Bar: colored ring/bar with urgency color shift near 3s.  
-- Lives Indicator: 5 hearts; animates on loss.  
-- Answer Options: large touch targets, 48dp min, high contrast states.  
-- Game Over Summary Card: score, best, solved, CTAs.  
+Use native buttons, lists, modals. Custom/lightly styled components aligned to palette:  
+- Puzzle Card: sequence layout with missing slot; responsive to varied number widths; missing cell tinted Seabrook 12% with feedback wash (primary tint on correct, red tint on wrong).  
+- Timer Ring/Bar/Chip: primary tint base; urgency shift under 3s; chip uses subtle tint with high-contrast text.  
+- Lives Indicator: 5 hearts; primary-colored active state; animates on loss.  
+- Answer Options: large touch targets, filled primary buttons with white text; focus/press overlays.  
+- Badges: “Best” gold (#D6A21F, white text); “Last” neutral (#F0F2F5, dark text).  
+- Game Over Summary Card: white surface on Lynx White background; CTAs use primary filled and secondary outline.  
 - Ads Gate Overlay: lightweight overlay with spinner/text; no modal blocks.
 
-State considerations: default, hover/press (where applicable), active, error/wrong, success, disabled (ads loading). Accessibility: ARIA labels on interactive controls, focus states, readable text labels on timers and feedback messages.
+State considerations: default, press/hover (where applicable), active, error/wrong, success, disabled (ads loading). Accessibility: visible focus rings on buttons, readable text labels on timers and feedback messages.
 
 ---
 
@@ -105,7 +106,7 @@ State considerations: default, hover/press (where applicable), active, error/wro
 
 ### 7.1 Consistency Rules
 
-- Buttons: Primary = filled primary; Secondary = outline neutral; Destructive (rare) = error.  
+- Buttons: Primary = filled orange (#D14A28) with white text + visible focus ring; Secondary = Seabrook outline with light fill on press; Destructive (rare) = error red.  
 - Feedback: Success inline flash + optional toast; Error inline flash/red + brief toast; Loading = spinner in overlays only.  
 - Forms/Inputs: Labels above; inline validation on submit or error; concise helper text.  
 - Modals: Avoid during play; Game Over as full-screen sheet; ads gate as lightweight overlay.  
@@ -113,7 +114,6 @@ State considerations: default, hover/press (where applicable), active, error/wro
 - Empty states: Friendly icon + single CTA.  
 - Confirmation: Only for exiting mid-session (if enabled) or resetting data.  
 - Notifications: Toast bottom for non-blocking info; short duration; screen-reader friendly text.  
-- Search: Not applicable.  
 - Date/time: Use relative timers with explicit seconds remaining.
 
 ---
@@ -139,7 +139,7 @@ Accessibility (target WCAG 2.1 AA):
 
 ### 9.1 Completion Summary
 
-- Core loops defined: start → timed puzzle → feedback → summary → restart with between-session ads.  
+- Core loops defined: start -> timed puzzle -> feedback -> summary -> restart with between-session ads.  
 - Components: puzzle card, timer, lives, answer grid, summary card, ads gate, toggles.  
 - Patterns: primary/secondary buttons, inline feedback, non-blocking overlays, AA contrast, large tap targets.  
 - Offline/fail-open: ads never block play; clear banner when offline.  
@@ -173,9 +173,10 @@ _None added in this pass._
 
 ### Version History
 
-| Date       | Version | Changes                              | Author |
-| ---------- | ------- | ------------------------------------ | ------ |
-| 2025-11-29 | 1.0     | Initial UX Design Specification      | Jabran |
+| Date       | Version | Changes                                              | Author |
+| ---------- | ------- | ---------------------------------------------------- | ------ |
+| 2025-11-29 | 1.0     | Initial UX Design Specification                      | Jabran |
+| 2025-11-29 | 1.1     | Updated to Sunset Punch palette and component states | Jabran |
 
 ---
 

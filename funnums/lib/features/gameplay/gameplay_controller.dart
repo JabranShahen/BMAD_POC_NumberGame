@@ -67,9 +67,7 @@ class GameplayController {
 
   void answer(int value) {
     _timer?.cancel();
-    print('DEBUG: Selected value: $value, Expected answer: ${current?.answer}, Puzzle: ${current?.id}');
     final correct = value == current?.answer;
-    print('DEBUG: Answer is ${correct ? "CORRECT" : "WRONG"}');
     if (correct) {
       score += 1;
       _loadNextPuzzle();

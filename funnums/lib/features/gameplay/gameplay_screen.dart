@@ -187,13 +187,12 @@ class _GameplayScreenState extends State<GameplayScreen> {
                 children: _puzzle!.options
                     .map((opt) => ElevatedButton(
                           onPressed: () => _onAnswer(opt),
-                          style: opt == _puzzle!.answer ? ElevatedButton.styleFrom(
-                            backgroundColor: Colors.green,
-                            foregroundColor: Colors.white,
-                          ) : null,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                            child: Text(opt.toString(), style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                            child: Text(
+                              opt.toString(),
+                              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
                           ),
                         ))
                     .toList(),
@@ -220,6 +219,7 @@ class _PuzzleCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
     final sequence = List<int>.from(puzzle.sequence);
     final display = <Widget>[];
     for (var i = 0; i < sequence.length; i++) {
@@ -227,13 +227,17 @@ class _PuzzleCard extends StatelessWidget {
       display.add(Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-          color: isMissing ? Colors.amber.shade100 : Colors.white,
+          color: isMissing ? colors.secondary.withOpacity(0.12) : Colors.white,
           borderRadius: BorderRadius.circular(8),
           border: Border.all(color: Colors.grey.shade300),
         ),
         child: Text(
           isMissing ? ' ? ' : sequence[i].toString(),
-          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: isMissing ? colors.secondary : colors.onSurface,
+          ),
         ),
       ));
       if (i != sequence.length - 1) {
@@ -242,7 +246,7 @@ class _PuzzleCard extends StatelessWidget {
     }
 
     final bgColor = feedback == _FeedbackState.correct
-        ? Colors.green.shade50
+        ? colors.primary.withOpacity(0.08)
         : feedback == _FeedbackState.wrong
             ? Colors.red.shade50
             : null;
@@ -282,6 +286,7 @@ class _LivesRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final primary = Theme.of(context).colorScheme.primary;
     return Row(
       children: List.generate(5, (index) {
         final active = index < lives;
@@ -289,7 +294,7 @@ class _LivesRow extends StatelessWidget {
           padding: const EdgeInsets.only(left: 4),
           child: Icon(
             active ? Icons.favorite : Icons.favorite_border,
-            color: active ? Colors.pink : Colors.grey,
+            color: active ? primary : Colors.grey,
           ),
         );
       }),
@@ -303,11 +308,12 @@ class _ScoreChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final secondary = Theme.of(context).colorScheme.secondary;
     return Chip(
-      backgroundColor: Colors.green.shade50,
+      backgroundColor: secondary.withOpacity(0.10),
       label: Text(
         'Score: $score',
-        style: TextStyle(color: Colors.green.shade800, fontWeight: FontWeight.w700),
+        style: TextStyle(color: secondary, fontWeight: FontWeight.w700),
       ),
     );
   }
