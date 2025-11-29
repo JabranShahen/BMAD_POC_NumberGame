@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../core/di.dart';
 import '../../core/routing.dart';
 import '../../data/sources/session_repository.dart';
+import '../gameplay/widgets/emoji_avatar.dart';
 
 class DifficultyScreen extends StatefulWidget {
   const DifficultyScreen({super.key});
@@ -262,36 +263,13 @@ class _Header extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 12),
-          const _EmojiBadge(emoji: '😄'),
-        ],
-      ),
-    );
-  }
-}
-
-class _EmojiBadge extends StatelessWidget {
-  final String emoji;
-  const _EmojiBadge({required this.emoji});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.16),
-        shape: BoxShape.circle,
-        border: Border.all(color: Colors.white.withOpacity(0.28)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 8,
-            offset: const Offset(0, 3),
+          const EmojiAvatarWidget(
+            lives: 5,
+            remainingSeconds: 8,
+            gameOver: false,
+            isDifficultyScreen: true,
           ),
         ],
-      ),
-      child: Text(
-        emoji,
-        style: const TextStyle(fontSize: 26),
       ),
     );
   }

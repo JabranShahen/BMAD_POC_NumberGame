@@ -11,6 +11,7 @@ import '../../data/models/settings.dart';
 import '../../data/sources/session_repository.dart';
 import 'game_over_screen.dart';
 import 'gameplay_controller.dart';
+import 'widgets/emoji_avatar.dart';
 
 class GameplayScreen extends StatefulWidget {
   const GameplayScreen({super.key});
@@ -183,7 +184,12 @@ class _GameplayScreenState extends State<GameplayScreen> {
                   ),
                 ),
                 const SizedBox(width: 12),
-                _StateEmojiAvatar(lives: _lives, remaining: _remaining),
+                EmojiAvatarWidget(
+                  lives: _lives,
+                  remainingSeconds: _remaining,
+                  gameOver: false,
+                  isDifficultyScreen: false,
+                ),
               ],
             ),
             const SizedBox(height: 12),
@@ -325,56 +331,6 @@ class _ScoreChip extends StatelessWidget {
       label: Text(
         'Score: $score',
         style: TextStyle(color: secondary, fontWeight: FontWeight.w700),
-      ),
-    );
-  }
-}
-
-class _StateEmojiAvatar extends StatelessWidget {
-  final int lives;
-  final int remaining;
-  const _StateEmojiAvatar({required this.lives, required this.remaining});
-
-  String _emoji() {
-    if (lives <= 0) return '😵';
-    if (remaining > 0 && remaining <= 3) return '😰';
-    switch (lives) {
-      case 5:
-        return '😄';
-      case 4:
-        return '🙂';
-      case 3:
-        return '😟';
-      case 2:
-        return '😰';
-      default:
-        return '😱';
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
-    final urgent = remaining > 0 && remaining <= 3;
-    final bg = urgent ? Colors.red.shade50 : colors.secondary.withOpacity(0.12);
-    final border = urgent ? Colors.red.shade200 : colors.secondary.withOpacity(0.35);
-    return Container(
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: bg,
-        shape: BoxShape.circle,
-        border: Border.all(color: border),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 8,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Text(
-        _emoji(),
-        style: const TextStyle(fontSize: 28),
       ),
     );
   }

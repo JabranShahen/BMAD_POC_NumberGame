@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../core/di.dart';
 import '../../core/routing.dart';
 import '../../data/sources/session_repository.dart';
+import 'widgets/emoji_avatar.dart';
 
 class GameOverArgs {
   final String mode;
@@ -54,12 +55,17 @@ class _GameOverScreenState extends State<GameOverScreen> {
           children: [
             Row(
               children: [
-                const _GameOverEmoji(),
+                const EmojiAvatarWidget(
+                  lives: 0,
+                  remainingSeconds: 0,
+                  gameOver: true,
+                  isDifficultyScreen: false,
+                ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: [
                       Text('Tough break this run', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
                       SizedBox(height: 4),
                       Text('Your score is saved. Ready for another try?', style: TextStyle(fontSize: 13)),
@@ -102,33 +108,6 @@ class _GameOverScreenState extends State<GameOverScreen> {
             )
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _GameOverEmoji extends StatelessWidget {
-  const _GameOverEmoji();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Colors.red.shade50,
-        shape: BoxShape.circle,
-        border: Border.all(color: Colors.red.shade200),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.04),
-            blurRadius: 8,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: const Text(
-        '😵',
-        style: TextStyle(fontSize: 32),
       ),
     );
   }
