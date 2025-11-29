@@ -1,0 +1,62 @@
+# generated: 2025-11-29
+# project: funnums
+# project_key: funnums
+# tracking_system: file-system
+# story_location: C:\Users\Jabra\Desktop\BMAD\BMAD_POC_NumberGame_2\docs\sprint-artifacts
+
+# STATUS DEFINITIONS:
+# ==================
+# Epic Status:
+#   - backlog: Epic exists in epic file but not contexted
+#   - contexted: Epic tech context created (required before drafting stories)
+#
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - drafted: Story file created in stories folder
+#   - ready-for-dev: Draft approved and story context created
+#   - in-progress: Developer actively working on implementation
+#   - review: Under SM review (via code-review workflow)
+#   - done: Story completed
+#
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - completed: Retrospective has been done
+#
+# WORKFLOW NOTES:
+# ===============
+# - Epics should be 'contexted' before stories can be 'drafted'
+# - Stories can be worked in parallel if team capacity allows
+# - SM typically drafts next story after previous one is 'done' to incorporate learnings
+# - Dev moves story to 'review', SM reviews, then Dev moves to 'done'
+
+generated: 2025-11-29
+project: funnums
+project_key: funnums
+tracking_system: file-system
+story_location: C:\Users\Jabra\Desktop\BMAD\BMAD_POC_NumberGame_2\docs\sprint-artifacts
+
+development_status:
+  epic-1: contexted
+  1-1-difficulty-selection-session-start: in-progress
+  1-2-timed-puzzle-presentation: in-progress
+  1-3-lives-and-game-over: in-progress
+  1-4-feedback-and-controls: backlog
+  epic-1-retrospective: optional
+
+  epic-2: backlog
+  2-1-scoring-and-bests: backlog
+  2-2-solved-counts-and-history: backlog
+  2-3-local-persistence-and-resume: backlog
+  2-4-puzzle-generation-and-variety: backlog
+  epic-2-retrospective: optional
+
+  epic-3: backlog
+  3-1-interstitials-between-sessions: backlog
+  3-2-offline-and-fail-open-behavior: backlog
+  epic-3-retrospective: optional
+
+  epic-4: backlog
+  4-1-leaderboard-hook: backlog
+  4-2-daily-challenge-hook: backlog
+  4-3-achievements-badges-hook: backlog
+  epic-4-retrospective: optional

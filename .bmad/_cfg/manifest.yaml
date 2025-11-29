@@ -1,9 +1,9 @@
 installation:
   version: 6.0.0-alpha.12
-  installDate: '2025-11-27T21:52:16.273Z'
-  lastUpdated: '2025-11-27T21:52:16.273Z'
+  installDate: '2025-11-29T01:20:21.777Z'
+  lastUpdated: '2025-11-29T01:20:21.777Z'
 modules:
   - core
   - bmm
 ides:
-  - roo
+  - codex

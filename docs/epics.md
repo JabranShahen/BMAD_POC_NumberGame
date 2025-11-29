@@ -1,415 +1,165 @@
-# PuzzleGame - Epic Breakdown
-
-**Author:** Jabran
-**Date:** 2025-11-27
-**Project Level:** 2-3
-**Target Scale:** MVP
-
----
-
-## Overview
-
-This document provides the complete epic and story breakdown for PuzzleGame, decomposing the requirements from the [PRD](./PRD.md) into implementable stories.
-
-**Living Document Notice:** This is the initial version. It will be updated after UX Design and Architecture workflows add interaction and technical details to stories.
-
-The epics are organized around the core game experience: rapid puzzle solving with emotional feedback, adaptive difficulty, and clean UI. All stories are sized for quick implementation in the BMad development approach.
-
----
-
-## Functional Requirements Inventory
-
-FR1: The game shall present number sequences with one missing number to the player.
-FR2: The game shall provide multiple choice options for the player to select the missing number.
-FR3: The game shall provide instant visual and audio feedback on whether the answer is correct or incorrect.
-FR4: The game shall implement time pressure for player decisions to create urgency.
-FR5: The game shall adapt difficulty levels based on player performance over multiple sessions.
-FR6: The game shall feature a clean, intuitive interface with minimal friction for starting and playing.
-FR7: The game shall include emotional feedback through animations, sound effects, and visual expressions.
-
----
-
-## FR Coverage Map
-
-- Epic 1 (Core Gameplay Loop): FR1, FR2, FR4
-- Epic 2 (Difficulty & Progression System): FR5
-- Epic 3 (Game Session & Lives): FR4 (partial), FR6 (partial)
-- Epic 4 (Feedback & Emotional Response): FR3, FR7
-- Epic 5 (UI / UX Experience): FR6
-- Epic 6 (Stats & Performance Tracking): FR5 (partial)
-- Epic 7 (Growth & Expansion Features): None (future expansion)
-
----
-
-## Epic 1: Core Gameplay Loop
-
-The fundamental puzzle mechanics that deliver instant, satisfying brain challenges in short bursts.
-
-### Story 1.1: Number Sequence Presentation
-
-As a player,
-I want to see a number sequence with one missing number,
-So that I can engage in the core puzzle challenge.
-
-**Acceptance Criteria:**
-
-**Given** the game is launched and ready to play
-**When** I start a new puzzle
-**Then** I see a sequence of numbers with one blank space clearly marked
-**And** the sequence follows mathematical patterns (arithmetic, geometric, etc.)
-
-**Prerequisites:** None
-
-**Technical Notes:** Support multiple sequence types, start with arithmetic sequences.
-
-### Story 1.2: Multiple Choice Selection
-
-As a player,
-I want multiple numbered options to choose from for the missing number,
-So that the puzzle is solvable and I can make quick decisions.
-
-**Acceptance Criteria:**
-
-**Given** a puzzle sequence is displayed
-**When** the puzzle loads
-**Then** I see 4-6 numbered buttons with potential answers
-**And** one answer is correct, others are plausible distractors
-**And** buttons are clearly labeled and touch-friendly
-
-**Prerequisites:** Story 1.1
-
-**Technical Notes:** Generate distractors based on sequence pattern.
-
-### Story 1.3: Timed Decision Pressure
-
-As a player,
-I want time pressure on my decisions,
-So that the challenge feels urgent and engaging.
-
-**Acceptance Criteria:**
-
-**Given** a puzzle is presented
-**When** the puzzle loads
-**Then** a countdown timer starts (5-10 seconds based on difficulty)
-**And** visual timer indicator shows remaining time clearly
-**And** timer creates mild urgency without stress
-
-**Prerequisites:** Story 1.1
-
-**Technical Notes:** Adjustable timer duration, visual countdown animation.
-
----
-
-## Epic 2: Difficulty & Progression System
-
-AI-driven difficulty that adapts to keep players in flow state through personalized challenges.
-
-### Story 2.1: Performance-Based Difficulty Adjustment
-
-As a player,
-I want difficulty to adjust based on my performance,
-So that the game feels challenging but achievable.
-
-**Acceptance Criteria:**
-
-**Given** I have played multiple puzzles
-**When** I complete a session
-**Then** the system analyzes my accuracy and speed
-**And** adjusts future puzzle complexity (sequence length, time limits, distractor difficulty)
-**And** ensures I stay in flow state (not too easy, not too hard)
-
-**Prerequisites:** Story 1.1, 1.2, 1.3
-
-**Technical Notes:** Simple AI algorithm tracking success rate, response time, streak performance.
-
-### Story 2.2: Difficulty Persistence
-
-As a player,
-I want my difficulty level to persist across sessions,
-So that progress feels meaningful and the game gets harder as I improve.
-
-**Acceptance Criteria:**
-
-**Given** I have established a performance baseline
-**When** I return to play
-**Then** puzzles start at my current difficulty level
-**And** I see gradual improvement over multiple sessions
-**And** difficulty never regresses without player choice
-
-**Prerequisites:** Story 2.1
-
-**Technical Notes:** Local storage of player stats and difficulty calibration.
-
----
-
-## Epic 3: Game Session & Lives
-
-Managing short, satisfying play sessions with natural start/stop points.
-
-### Story 3.1: Instant Game Launch
-
-As a player,
-I want the game to start immediately when opened,
-So that I can play in short bursts without waiting.
-
-**Acceptance Criteria:**
-
-**Given** I open the app
-**When** the app loads
-**Then** I'm immediately presented with the first puzzle
-**And** no menus, tutorials, or setup screens block play
-**And** I can start solving within 2 seconds of launch
-
-**Prerequisites:** None
-
-**Technical Notes:** Minimal loading screens, preload first puzzle.
-
-### Story 3.2: Session Flow Control
-
-As a player,
-I want natural stopping points in gameplay,
-So that I can play for 30 seconds or 10 minutes comfortably.
-
-**Acceptance Criteria:**
-
-**Given** I'm playing puzzles
-**When** I want to stop
-**Then** I can pause or exit at any natural break point
-**And** progress is saved automatically
-**And** I can resume exactly where I left off
-
-**Prerequisites:** Story 3.1
-
-**Technical Notes:** Auto-save after each puzzle, seamless resume.
-
----
-
-## Epic 4: Feedback & Emotional Response
-
-Emotional feedback that makes each interaction feel rewarding and human.
-
-### Story 4.1: Correct Answer Feedback
-
-As a player,
-I want instant, positive feedback when I answer correctly,
-So that I feel clever and motivated to continue.
-
-**Acceptance Criteria:**
-
-**Given** I select the correct answer
-**When** I make the selection
-**Then** I see immediate visual celebration (checkmark, sparkle effect)
-**And** hear satisfying sound effect
-**And** see happy character expression/animation
-**And** brief pause allows emotional processing
-
-**Prerequisites:** Story 1.2
-
-**Technical Notes:** Multiple feedback variations to prevent repetition.
-
-### Story 4.2: Incorrect Answer Feedback
-
-As a player,
-I want gentle, encouraging feedback when I answer incorrectly,
-So that I learn without feeling discouraged.
-
-**Acceptance Criteria:**
-
-**Given** I select an incorrect answer
-**When** I make the selection
-**Then** I see the correct answer highlighted
-**And** hear neutral sound effect (not negative)
-**And** see thoughtful character expression (not sad)
-**And** brief explanation of why it's correct
-
-**Prerequisites:** Story 1.2
-
-**Technical Notes:** Educational feedback that helps learning.
-
-### Story 4.3: Flow State Indicators
-
-As a player,
-I want visual cues that I'm in flow state,
-So that I feel immersed and competent.
-
-**Acceptance Criteria:**
-
-**Given** I'm on a winning streak
-**When** I answer correctly in sequence
-**Then** I see streak counter with encouraging animations
-**And** background elements respond to my success
-**And** audio builds positive momentum without being distracting
-
-**Prerequisites:** Story 4.1
-
-**Technical Notes:** Subtle environmental feedback that enhances immersion.
-
----
-
-## Epic 5: UI / UX Experience
-
-Clean, intuitive interface that disappears into the experience.
-
-### Story 5.1: Minimal Interface Design
-
-As a player,
-I want a clean interface that doesn't distract from puzzles,
-So that I can focus on the mental challenge.
-
-**Acceptance Criteria:**
-
-**Given** I'm playing the game
-**When** puzzles are displayed
-**Then** I see only essential elements (sequence, choices, timer)
-**And** no clutter, ads, or unnecessary UI elements
-**And** high contrast for readability
-
-**Prerequisites:** Story 1.1
-
-**Technical Notes:** Minimalist design philosophy, focus on content over chrome.
-
-### Story 5.2: Touch-Friendly Controls
-
-As a player,
-I want large, easy-to-tap buttons,
-So that I can play quickly and accurately on mobile devices.
-
-**Acceptance Criteria:**
-
-**Given** I'm using a touch device
-**When** I need to select answers
-**Then** buttons are at least 44pt touch targets
-**And** spacing prevents accidental taps
-**And** visual feedback shows touch registration
-
-**Prerequisites:** Story 1.2
-
-**Technical Notes:** Mobile-first design, test on various screen sizes.
-
-### Story 5.3: Accessibility Basics
-
-As a player,
-I want the game to be usable by people with different abilities,
-So that more people can enjoy the experience.
-
-**Acceptance Criteria:**
-
-**Given** I'm playing the game
-**When** I interact with elements
-**Then** color contrast meets WCAG AA standards
-**And** text is readable at default sizes
-**And** no color-only information conveyance
-
-**Prerequisites:** Story 5.1
-
-**Technical Notes:** Basic accessibility compliance for broad usability.
-
----
-
-## Epic 6: Stats & Performance Tracking
-
-Measuring player progress to fuel difficulty adaptation and engagement.
-
-### Story 6.1: Basic Performance Metrics
-
-As a player,
-I want to see my performance data,
-So that I can track my improvement over time.
-
-**Acceptance Criteria:**
-
-**Given** I have played multiple sessions
-**When** I check my stats
-**Then** I see accuracy percentage, average response time, longest streak
-**And** data is presented simply and encouragingly
-**And** I can see trends over time
-
-**Prerequisites:** Story 1.2, 2.1
-
-**Technical Notes:** Store session data locally, simple visualizations.
-
-### Story 6.2: Success Feedback Integration
-
-As a player,
-I want performance data to inform difficulty,
-So that the game adapts to my skill level automatically.
-
-**Acceptance Criteria:**
-
-**Given** my performance data is tracked
-**When** difficulty adjusts
-**Then** I see how my stats influence the game
-**And** adjustments feel fair and motivating
-**And** I understand why difficulty changed
-
-**Prerequisites:** Story 6.1, 2.1
-
-**Technical Notes:** Transparent difficulty algorithm with player visibility.
-
----
-
-## Epic 7: Growth & Expansion Features
-
-Future features for long-term engagement (not in MVP).
-
-### Story 7.1: Achievement System Foundation
-
-As a developer,
-I want infrastructure for achievements,
-So that I can add engagement features in future updates.
-
-**Acceptance Criteria:**
-
-**Given** the game tracks performance
-**When** players reach milestones
-**Then** the system can trigger achievement notifications
-**And** data structure supports various achievement types
-**And** foundation is ready for expansion
-
-**Prerequisites:** Story 6.1
-
-**Technical Notes:** Extensible achievement framework, not exposed to users yet.
-
-### Story 7.2: Theme System Preparation
-
-As a developer,
-I want theme switching capability,
-So that I can add visual variety in future versions.
-
-**Acceptance Criteria:**
-
-**Given** the UI is modular
-**When** I want to add themes
-**Then** color schemes and visual elements can be swapped
-**And** theme data is separate from game logic
-**And** foundation supports multiple visual styles
-
-**Prerequisites:** Story 5.1
-
-**Technical Notes:** Theme-agnostic design system.
+# funnums - Epics and Stories
+
+## Epic 1 - Core Gameplay Loop (MVP)
+- Goal: Deliver a playable timed missing-number loop with lives and immediate feedback.
+- FR Coverage: FR-001, FR-002, FR-003, FR-004, FR-005, FR-010, FR-011, FR-012
+
+### Story 1.1 - Difficulty Selection & Session Start (MVP)
+- User Story: As a player, I want to choose a difficulty (Fun/Medium/Hard) so I can play at my skill level.
+- Acceptance Criteria (BDD):
+  - Given the home screen is loaded, when I tap Fun/Medium/Hard, then a session starts in that mode (FR-001).
+  - Given I select a mode, when the session starts, then timers use that mode’s targets (Fun 8s, Medium 6s, Hard 4s) (FR-003).
+  - Given I change my mind, when I back out, then I return to home without starting a session.
+- Prerequisites: None.
+- Technical Notes: Mode selection sets timer constants and difficulty seed; align with UX layout (three cards, best score badge).
+
+### Story 1.2 - Timed Puzzle Presentation (MVP)
+- User Story: As a player, I want each puzzle to show clearly with a visible timer so I can answer before time runs out.
+- Acceptance Criteria (BDD):
+  - Given a puzzle is shown, when it renders, then I see the sequence with one missing slot and clear answer options/input (FR-002).
+  - Given the timer is running, when it expires, then I lose one life and move to the next puzzle or Game Over if lives are 0 (FR-003, FR-004).
+  - Given I answer correctly before time expires, when I submit, then I advance automatically without extra taps (FR-005).
+  - Given the timer is below 3 seconds, when time declines, then the timer style shifts to urgency (color/animation).
+- Prerequisites: Story 1.1.
+- Technical Notes: Timer ring/bar with per-mode constants; ensure accessibility labels for timer and options; auto-advance on correct.
+
+### Story 1.3 - Lives and Game Over (MVP)
+- User Story: As a player, I want a clear lives system so I know when the session ends.
+- Acceptance Criteria (BDD):
+  - Given a session starts, when play begins, then I see 5 lives and each wrong/expired answer reduces lives by 1 (FR-004).
+  - Given lives reach 0, when the last life is lost, then I see Game Over with score, best for mode, solved count, and Play Again / Change Difficulty (FR-012).
+  - Given Game Over is shown, when I tap Play Again, then I return to difficulty selection and a fresh session starts.
+- Prerequisites: Stories 1.1, 1.2.
+- Technical Notes: Animate heart loss; ensure summary pulls from scoring data; avoid modal blocks mid-play (only at Game Over).
+
+### Story 1.4 - Feedback & Controls (MVP)
+- User Story: As a player, I want immediate feedback and control over audio so I can tune the experience.
+- Acceptance Criteria (BDD):
+  - Given I answer, when correct or wrong, then I get instant visual feedback (green/red flash, text cue) (FR-010).
+  - Given sound is on, when events occur, then matching sounds play; when I toggle sound off, then sounds stop and the setting persists (FR-011, FR-015).
+  - Given haptics are available, when events occur, then haptics follow the toggle; devices without haptics do not error (FR-015).
+- Prerequisites: Story 1.2.
+- Technical Notes: Use unified feedback component; store sound/haptics toggles locally; provide accessible text equivalents.
+
+## Epic 2 - Scoring, History, and Persistence (MVP)
+- Goal: Track progress across sessions and preserve state locally.
+- FR Coverage: FR-006, FR-007, FR-008, FR-009, FR-016, FR-017, FR-018
+
+### Story 2.1 - Scoring and Bests (MVP)
+- User Story: As a player, I want scores and bests per difficulty so I can see progress.
+- Acceptance Criteria (BDD):
+  - Given a session starts, when I answer correctly, then score increments and resets per session start (FR-006).
+  - Given scores persist, when I finish a session, then best score per difficulty updates and shows on Home/Difficulty and Game Over (FR-007).
+  - Given I relaunch the app, when it loads, then best scores are retrieved from local storage (FR-018).
+- Prerequisites: Epic 1 stories complete.
+- Technical Notes: Store per-mode bests; ensure atomic writes; surface in header cards.
+
+### Story 2.2 - Solved Counts and History (MVP)
+- User Story: As a player, I want solved counts and a short history to track improvement.
+- Acceptance Criteria (BDD):
+  - Given I answer correctly, when the session records progress, then solved count increments per difficulty (FR-008).
+  - Given history exists, when I open History, then I see last N session scores and solved counts per mode (FR-009).
+  - Given I relaunch, when data loads, then history and solved counts remain intact (FR-018).
+- Prerequisites: Story 2.1.
+- Technical Notes: Choose N (e.g., last 10); simple list with timestamps; guard against corrupted entries.
+
+### Story 2.3 - Local Persistence and Resume (MVP)
+- User Story: As a player, I want the app to handle interruptions without losing my settings and records.
+- Acceptance Criteria (BDD):
+  - Given I set sound/haptics, when I restart the app, then toggles persist (FR-015, FR-018).
+  - Given the app is backgrounded/killed mid-session, when I return, then the app either restores the in-progress session state or ends cleanly and preserves scores/history (FR-016).
+  - Given data corruption is detected, when loading, then the app safely resets invalid data without crashing (FR-018).
+- Prerequisites: Story 2.1.
+- Technical Notes: Decide strategy (restore vs clean end) and keep consistent; use defensive JSON parsing; add versioning to stored data.
+
+### Story 2.4 - Puzzle Generation and Variety (MVP)
+- User Story: As a player, I want varied puzzles per difficulty so runs feel fresh.
+- Acceptance Criteria (BDD):
+  - Given a session is running, when new puzzles are generated, then difficulty-appropriate datasets are used and recent repeats are avoided in short runs (FR-017).
+  - Given a puzzle is presented, when answers are evaluated, then there is a single unambiguous correct answer.
+  - Given generation occurs, when performance is measured, then puzzle creation and transition take under 300ms (aligning with PRD performance target).
+- Prerequisites: Story 1.2.
+- Technical Notes: Maintain per-mode pools or seeds; simple de-duplication window; log invalid puzzles for QA.
+
+## Epic 3 - Ads and Offline Behavior (MVP)
+- Goal: Monetize between sessions without disrupting gameplay; handle offline gracefully.
+- FR Coverage: FR-013, FR-014
+
+### Story 3.1 - Interstitials Between Sessions (MVP)
+- User Story: As a player, I want ads only between sessions so gameplay is never interrupted.
+- Acceptance Criteria (BDD):
+  - Given I am playing, when puzzles are active, then no ads are shown; only after Game Over and before next start (FR-013).
+  - Given an ad request is made, when it fails or is skipped, then the next session starts without blocking (FR-014).
+  - Given policies apply, when an ad is shown, then placement follows platform guidelines and age-appropriate settings.
+- Prerequisites: Epic 1 complete.
+- Technical Notes: Insert lightweight gate screen; ensure navigation cannot trigger ad mid-play; respect 2s ad load/fail timeout from PRD.
+
+### Story 3.2 - Offline and Fail-Open Behavior (MVP)
+- User Story: As a player, I want the game to work offline without ad blocks.
+- Acceptance Criteria (BDD):
+  - Given I am offline, when I start or restart a session, then gameplay begins immediately with no blocking dialogs (FR-014).
+  - Given ad calls fail, when a new session is starting, then ad requests are skipped or retried later without impacting play (FR-014).
+  - Given network state changes, when playing, then session flow remains intact; show a small offline/online banner only outside puzzles.
+- Prerequisites: Story 3.1.
+- Technical Notes: Implement fail-open; backoff for ad retries; guard against ad SDK crashes; log failures for telemetry.
+
+## Epic 4 - Growth & Future Hooks (Post-MVP)
+- Goal: Prepare for post-MVP growth features.
+- FR Coverage: future (Growth/Visions) for leaderboards, challenges, badges; keep placeholders tied to vision features.
+
+### Story 4.1 - Leaderboard Hook (Growth)
+- User Story: As a player, I want to compete on leaderboards so I can compare scores. (Future)
+- Acceptance Criteria (placeholder):
+  - Given best scores exist, when backend is available, then scores can be tagged and submitted via defined contract.
+  - Given UI exists, when feature is inactive, then the entry point is hidden or disabled.
+  - Given data model is defined, when syncing, then mode and score metadata are included.
+
+### Story 4.2 - Daily Challenge Hook (Growth)
+- User Story: As a player, I want daily challenges to drive repeat play. (Future)
+- Acceptance Criteria (placeholder):
+  - Given a daily seed, when the day changes, then a new daily puzzle is flagged and tracked.
+  - Given completion is stored, when I finish the daily, then it cannot repeat until the next day.
+  - Given UI is inactive, when not enabled, then the entry point is hidden/disabled.
+
+### Story 4.3 - Achievements/Badges Hook (Growth)
+- User Story: As a player, I want badges for milestones. (Future)
+- Acceptance Criteria (placeholder):
+  - Given badge rules exist, when milestones fire (e.g., solved counts, streaks), then they are evaluated locally.
+  - Given evaluation runs, when a badge is earned, then it can be stored locally and displayed when UI is enabled.
+  - Given UI is inactive, when not enabled, then badge display is hidden/disabled.
 
 ---
 
 ## FR Coverage Matrix
+- FR-001: Epic 1 Story 1.1
+- FR-002: Epic 1 Story 1.2
+- FR-003: Epic 1 Story 1.1, 1.2
+- FR-004: Epic 1 Story 1.2, 1.3
+- FR-005: Epic 1 Story 1.2
+- FR-006: Epic 2 Story 2.1
+- FR-007: Epic 2 Story 2.1
+- FR-008: Epic 2 Story 2.2
+- FR-009: Epic 2 Story 2.2
+- FR-010: Epic 1 Story 1.4
+- FR-011: Epic 1 Story 1.4
+- FR-012: Epic 1 Story 1.3
+- FR-013: Epic 3 Story 3.1
+- FR-014: Epic 3 Story 3.1, 3.2
+- FR-015: Epic 1 Story 1.4; Epic 2 Story 2.3
+- FR-016: Epic 2 Story 2.3
+- FR-017: Epic 2 Story 2.4
+- FR-018: Epic 2 Stories 2.1, 2.2, 2.3
 
-| Requirement | Epic Coverage | Stories |
-|-------------|---------------|---------|
-| FR1 | Epic 1 | 1.1 |
-| FR2 | Epic 1 | 1.2 |
-| FR3 | Epic 4 | 4.1, 4.2 |
-| FR4 | Epic 1, Epic 3 | 1.3, 3.1 |
-| FR5 | Epic 2, Epic 6 | 2.1, 2.2, 6.2 |
-| FR6 | Epic 3, Epic 5 | 3.1, 5.1, 5.2, 5.3 |
-| FR7 | Epic 4 | 4.1, 4.2, 4.3 |
+## Epic Breakdown Summary
+- Epics: 4 (Core Gameplay, Scoring/History/Persistence, Ads/Offline, Growth Hooks)
+- Stories: 13 total (MVP-focused plus future hooks)
+- UX alignment: Timer urgency, auto-advance, non-blocking ads, offline banners, large touch targets
+- NFR highlights: Timer targets (8s/6s/4s), ad load/fail timeout <= 2s, local persistence with defensive loading
 
 ---
 
-## Summary
-
-7 epics with 18 user stories provide complete coverage of all functional requirements. Stories are sized for quick implementation (1-3 day sprints each) and focus on the core experience of rapid, emotionally engaging puzzle solving. The breakdown enables parallel development across epics while maintaining dependency order.
-
----
-
-_For implementation: Use the `create-story` workflow to generate individual story implementation plans from this epic breakdown._
-
-_This document will be updated after UX Design and Architecture workflows to incorporate interaction details and technical decisions._
+## Traceability Summary
+- Epic 1: FR-001, FR-002, FR-003, FR-004, FR-005, FR-010, FR-011, FR-012
+- Epic 2: FR-006, FR-007, FR-008, FR-009, FR-015, FR-016, FR-017, FR-018
+- Epic 3: FR-013, FR-014
+- Epic 4 (future hooks): Growth/vision items (leaderboards, daily challenges, achievements) to be mapped when activated.

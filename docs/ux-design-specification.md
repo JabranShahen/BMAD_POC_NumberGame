@@ -1,203 +1,182 @@
-# UX Design Specification: PuzzleGame
+# funnums UX Design Specification
 
-## Executive Summary
-
-PuzzleGame delivers brain-stimulating puzzle challenges in bite-sized sessions, combining rapid cognitive engagement with emotional feedback. The experience prioritizes flow state through adaptive difficulty, instant gratification, and minimal friction. Users feel clever and accomplished after each interaction, regardless of session length.
-
-## Design Principles
-
-### Core Experience Goals
-- **Flow State Focus**: Every interaction maintains optimal challenge balance
-- **Emotional Resonance**: Feedback feels human and encouraging
-- **Session Flexibility**: Works for 30-second breaks or 10-minute dives
-- **Cognitive Satisfaction**: Each puzzle delivers genuine mental reward
-
-### Key User Needs Addressed
-- **Mental Stimulation**: Clean, challenging puzzles without overwhelm
-- **Emotional Validation**: Recognition of cleverness and improvement
-- **Time Respect**: No pressure to play longer than desired
-- **Progress Transparency**: Clear sense of growing capability
-
-## User Journey Mapping
-
-### Primary User Journey: Quick Brain Boost
-
-**Scenario: Commuter Break**
-1. **Trigger**: Waiting at bus stop, needs mental engagement
-2. **Entry**: Opens app (instant load, no menus)
-3. **Engagement**: Presented with puzzle immediately
-4. **Flow**: Solves 3-5 puzzles in 2 minutes
-5. **Climax**: Feels satisfied, maybe slight improvement
-6. **Exit**: Closes app naturally, returns to day
-
-**Emotional Arc**: Calm → Focused → Accomplished → Content
-
-### Secondary Journey: Extended Session
-
-**Scenario: Evening Wind-down**
-1. **Trigger**: Wants relaxing mental activity
-2. **Entry**: Opens for longer play
-3. **Engagement**: Multiple rounds, sees difficulty adaptation
-4. **Flow**: Maintains engagement through progression
-5. **Climax**: Experiences breakthrough in difficulty
-6. **Exit**: Closes feeling mentally refreshed
-
-**Emotional Arc**: Curious → Immersed → Triumphant → Satisfied
-
-## Information Architecture
-
-### Core Screens
-
-**Game Screen (Primary)**
-- Puzzle sequence display (prominent)
-- Answer options (touch-friendly buttons)
-- Timer/progress indicator (subtle)
-- Lives/streak counter (minimal)
-
-**Results Screen (Momentary)**
-- Correct answer highlight
-- Performance feedback
-- Next action prompt
-- Streak continuation
-
-**Settings Screen (Optional)**
-- Difficulty override
-- Sound preferences
-- Accessibility options
-
-### Navigation Model
-
-**Single-Screen Flow**: Game → Result → Game (loop)
-- No complex navigation required
-- Auto-advance for seamless play
-- Optional pause for longer breaks
-
-## Interaction Design
-
-### Puzzle Presentation
-- **Sequence Display**: Large, clear numbers in readable font
-- **Missing Indicator**: Visual blank space with subtle animation
-- **Answer Options**: 4-6 buttons arranged for thumb navigation
-- **Visual Hierarchy**: Puzzle > Options > Timer > Stats
-
-### Input Methods
-- **Primary**: Touch taps on answer buttons
-- **Feedback**: Immediate visual response to touch
-- **Error Prevention**: Clear button states (normal/hover/disabled)
-
-### Timing & Pressure
-- **Countdown**: Circular progress indicator
-- **Urgency Cues**: Subtle color change as time runs low
-- **No Punishment**: Time pressure creates excitement, not stress
-
-## Visual Design System
-
-### Color Palette
-- **Primary**: Clean blues (#0066CC, #3399FF) for trust and focus
-- **Accent**: Warm golds (#FFD700, #FFA500) for success feedback
-- **Neutral**: Soft grays (#F5F5F5, #E0E0E0) for backgrounds
-- **Semantic**: Green for correct, gentle red for incorrect
-
-### Typography
-- **Primary**: Clean sans-serif (Roboto/Similar) for readability
-- **Sizes**: 24pt for numbers, 16pt for buttons, 12pt for metadata
-- **Weights**: Regular for content, Medium for emphasis
-
-### Iconography
-- Minimal, meaningful icons for feedback
-- Consistent emotional expressions
-- Scalable vector graphics
-
-## Animation & Motion
-
-### Micro-Interactions
-- **Button Press**: Satisfying scale-down and color feedback
-- **Correct Answer**: Celebrate with sparkle and bounce
-- **Incorrect Answer**: Gentle shake with encouraging animation
-- **Timer Urgency**: Subtle pulse without distraction
-
-### Flow Continuity
-- Smooth transitions between puzzles
-- Loading states that feel instant
-- Progress animations that feel rewarding
-
-## Accessibility Considerations
-
-### Visual Accessibility
-- High contrast ratios (4.5:1 minimum)
-- Scalable text and touch targets (44pt minimum)
-- Color-blind friendly color schemes
-- Screen reader support for all interactive elements
-
-### Motor Accessibility
-- Large touch targets (48x48dp minimum)
-- Gesture alternatives for complex interactions
-- No time-based only challenges
-
-### Cognitive Accessibility
-- Clear, simple instructions
-- Consistent interaction patterns
-- Error states with helpful guidance
-- Progress indication at all times
-
-## Mobile-First Responsive Design
-
-### Touch Optimization
-- Thumb-zone button placement
-- Swipe gestures for quick navigation
-- Haptic feedback for tactile satisfaction
-
-### Screen Size Adaptation
-- Flexible layouts for phones/tablets
-- Consistent experience across orientations
-- Readable text scaling
-
-## Performance & Technical UX
-
-### Loading & Responsiveness
-- Sub-2 second app launch
-- Instant puzzle generation
-- Smooth 60fps animations
-- No perceptible delays
-
-### Error Handling UX
-- Graceful offline functionality
-- Clear error messages with recovery actions
-- Auto-save progress to prevent loss
-
-## User Testing & Iteration Plan
-
-### MVP Testing Focus
-- First-time user experience (FTUE)
-- Puzzle comprehension and enjoyment
-- Session length preferences
-- Difficulty adaptation feel
-
-### Key Metrics to Track
-- Session duration distribution
-- Puzzle completion rates
-- User retention curves
-- Emotional feedback sentiment
-
-## Design Artifacts Created
-
-### Wireframes
-- Game screen variations (different puzzle states)
-- Results feedback screens
-- Settings accessibility
-
-### Interaction Prototypes
-- Touch feedback demonstrations
-- Animation timing studies
-- Flow state maintenance tests
-
-### Usability Guidelines
-- Touch target specifications
-- Animation timing constants
-- Accessibility compliance checklist
+_Created on 2025-11-29 by Jabran_  
+_Generated using BMad Method - Create UX Design Workflow v1.0_
 
 ---
 
-**Design Philosophy**: PuzzleGame exists to make users feel clever and accomplished through pure puzzle satisfaction. Every design decision serves this emotional core - from the instant puzzle presentation to the gentle encouragement after mistakes. The experience is about celebrating human cognition, not testing it.
+## Executive Summary
 
-**Next Steps**: These UX specifications will guide the development of high-fidelity prototypes and final implementation. The focus remains on maintaining flow state through adaptive challenge and immediate emotional feedback.
+funnums is a mobile missing-number puzzle built for fast, repeatable sessions. The UX centers on a frictionless loop: pick a difficulty, race a visible timer, see instant feedback, and loop back through a simple Game Over summary with non-intrusive, between-session ads. Clarity (timer, lives, score), speed (auto-advance), and calm visuals keep players focused while subtle reward cues (sound/animation) reinforce progress.
+
+---
+
+## 1. Design System Foundation
+
+### 1.1 Design System Choice
+
+Hybrid native-first approach: follow iOS HIG and Material patterns for controls and navigation, with light custom styling (friendly colors, bold numeric typography) for game identity. Keep components minimal to prioritize clarity and speed; reuse platform defaults for dialogs, toasts, and lists to reduce risk and improve accessibility.
+
+---
+
+## 2. Core User Experience
+
+### 2.1 Defining Experience
+
+Defining loop: choose difficulty → solve a missing-number puzzle under a visible timer → get immediate feedback → continue until lives expire → view Game Over summary (score, best, solved) → restart. Success hinges on instant comprehension (numbers legible, timer clear) and zero friction between puzzles (auto-advance on correct).
+
+### 2.2 Novel UX Patterns
+
+None required; the loop fits standard mobile game patterns (timer, lives, score, summary). Focus on polish: readable numerals, urgent yet calm timer cues, non-blocking ads between sessions.
+
+---
+
+## 3. Visual Foundation
+
+### 3.1 Color System
+
+- Primary: #4C7CF6 (actions, timer ring active)  
+- Accent: #F5A524 (warnings, urgency ticks)  
+- Success: #3CB371 (correct feedback)  
+- Error: #E44F4F (wrong answer, life loss)  
+- Neutral: #0F172A / #1F2937 text, #E5E7EB backgrounds, #CBD5E1 borders  
+- Optional energy accent: #7C3AED for celebratory states sparingly  
+- Tone: bright, approachable, kid-friendly; high contrast for legibility.
+
+**Interactive Visualizations:** Not generated in this pass.
+
+---
+
+## 4. Design Direction
+
+### 4.1 Chosen Design Approach
+
+Clean card-based layout with oversized numerals and prominent timer ring/bar. Portrait-only, single-column. Top bar: timer + lives + score. Middle: puzzle card with sequence and answer options. Bottom: discreet controls (sound/haptics toggle), minimal chrome. Feedback uses quick flashes and gentle haptics; avoid modal interruptions except Game Over. Ads only between sessions with a slim “Next round loading…” gate.
+
+**Interactive Mockups:** Not generated in this pass.
+
+---
+
+## 5. User Journey Flows
+
+### 5.1 Critical User Paths
+
+**Journey: Start & Play (MVP)**  
+1) Home: “Choose your challenge” + buttons Fun/Medium/Hard, show best and last score per mode.  
+2) Difficulty: three cards with timer hints (Fun 8s, Medium 6s, Hard 4s) and best badges. Start launches puzzle.  
+3) Puzzle: show sequence with missing slot, answer options, timer ring/bar, lives (5 hearts), score. Timer visible; expiry = mistake. Correct auto-advances; wrong animates and decrements lives.  
+4) Game Over: summary (score, best, solved count), CTAs “Play again” and “Change difficulty”.  
+5) Ads gate (between sessions): “Next round loading…”; if ad fails/offline, skip gracefully.
+
+**Journey: History & Progress (MVP)**  
+1) Home → History: list per difficulty with last N scores, best, solved count.  
+2) Empty state: “Finish a run to see your progress.”  
+3) Return CTA to play again.
+
+**Journey: Settings & Controls (MVP)**  
+1) Header/overflow: toggles for sound and haptics.  
+2) Note: applies immediately; persists across sessions.  
+3) Link: “About ads” (explains between-session only, fail-open offline).
+
+**Journey: Offline / Ad Fail (MVP)**  
+1) Detect offline: banner “Offline—puzzles still work. Ads skipped.”  
+2) No blocking dialogs; play flow unchanged.  
+3) When back online, ads resume between sessions.
+
+---
+
+## 6. Component Library
+
+### 6.1 Component Strategy
+
+Use native buttons, lists, modals. Custom/lightly styled components:  
+- Puzzle Card: sequence layout with missing slot; responsive to varied number widths.  
+- Timer Ring/Bar: colored ring/bar with urgency color shift near 3s.  
+- Lives Indicator: 5 hearts; animates on loss.  
+- Answer Options: large touch targets, 48dp min, high contrast states.  
+- Game Over Summary Card: score, best, solved, CTAs.  
+- Ads Gate Overlay: lightweight overlay with spinner/text; no modal blocks.
+
+State considerations: default, hover/press (where applicable), active, error/wrong, success, disabled (ads loading). Accessibility: ARIA labels on interactive controls, focus states, readable text labels on timers and feedback messages.
+
+---
+
+## 7. UX Pattern Decisions
+
+### 7.1 Consistency Rules
+
+- Buttons: Primary = filled primary; Secondary = outline neutral; Destructive (rare) = error.  
+- Feedback: Success inline flash + optional toast; Error inline flash/red + brief toast; Loading = spinner in overlays only.  
+- Forms/Inputs: Labels above; inline validation on submit or error; concise helper text.  
+- Modals: Avoid during play; Game Over as full-screen sheet; ads gate as lightweight overlay.  
+- Navigation: Single-stack portrait flow; back from difficulty to Home; in-run back disabled to prevent accidental exits.  
+- Empty states: Friendly icon + single CTA.  
+- Confirmation: Only for exiting mid-session (if enabled) or resetting data.  
+- Notifications: Toast bottom for non-blocking info; short duration; screen-reader friendly text.  
+- Search: Not applicable.  
+- Date/time: Use relative timers with explicit seconds remaining.
+
+---
+
+## 8. Responsive Design & Accessibility
+
+### 8.1 Responsive Strategy
+
+Primary: mobile portrait.  
+- Mobile: single column; bottom padding for safe areas; large tap targets (48dp).  
+- Tablet: centered column with generous margins; larger puzzle card; optional split for history/details.  
+- Desktop (optional): centered fixed-width column; same hierarchy.
+
+Accessibility (target WCAG 2.1 AA):  
+- Contrast: meet AA for text/icons; timer/lives states distinguishable by shape + color.  
+- Keyboard/focus support for accessibility modes; visible focus rings.  
+- Screen reader labels: timer, lives count, “x lives left,” “correct/wrong,” “time’s up,” “ad loading/skipped.”  
+- Touch targets: >=48dp; avoid tightly packed answers.
+
+---
+
+## 9. Implementation Guidance
+
+### 9.1 Completion Summary
+
+- Core loops defined: start → timed puzzle → feedback → summary → restart with between-session ads.  
+- Components: puzzle card, timer, lives, answer grid, summary card, ads gate, toggles.  
+- Patterns: primary/secondary buttons, inline feedback, non-blocking overlays, AA contrast, large tap targets.  
+- Offline/fail-open: ads never block play; clear banner when offline.  
+- References: PRD/epics aligned; future hooks (leaderboard/daily/badges) remain hidden placeholders.
+
+---
+
+## Appendix
+
+### Related Documents
+
+- Product Requirements: `docs/prd.md`
+- Product Brief: `docs/product-brief-funnums-2025-11-29.md`
+- Brainstorming: n/a
+
+### Core Interactive Deliverables
+
+- Color Theme Visualizer: not generated in this pass.
+- Design Direction Mockups: not generated in this pass.
+
+### Optional Enhancement Deliverables
+
+_None added in this pass._
+
+### Next Steps & Follow-Up Workflows
+
+- Wireframe Generation (or Excalidraw) for key screens.  
+- Interactive prototype if desired.  
+- Component showcase to lock states/variants.  
+- Feed UX context into architecture and build.
+
+### Version History
+
+| Date       | Version | Changes                              | Author |
+| ---------- | ------- | ------------------------------------ | ------ |
+| 2025-11-29 | 1.0     | Initial UX Design Specification      | Jabran |
+
+---
+
+_This UX Design Specification was created through collaborative design facilitation. Decisions emphasize speed, clarity, and non-intrusive monetization for funnums’ timed number-puzzle experience._
