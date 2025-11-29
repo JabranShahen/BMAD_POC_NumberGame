@@ -7,7 +7,7 @@ _Generated using BMad Method - Create UX Design Workflow v1.0_
 
 ## Executive Summary
 
-funnums is a mobile missing-number puzzle built for fast, repeatable sessions. The UX centers on a frictionless loop: pick a difficulty, race a visible timer, see instant feedback, and loop back through a simple Game Over summary with non-intrusive, between-session ads. Clarity (timer, lives, score), speed (auto-advance), and calm visuals keep players focused while subtle reward cues (sound/animation) reinforce progress.
+funnums is a mobile missing-number puzzle built for fast, repeatable sessions. The UX centers on a frictionless loop: pick a difficulty, race a visible timer, see instant feedback, and loop back through a simple Game Over summary. Clarity (timer, lives, score), speed (auto-advance), and calm visuals keep players focused while subtle reward cues (sound/animation) reinforce progress.
 
 ---
 
@@ -27,7 +27,7 @@ Defining loop: choose difficulty -> solve a missing-number puzzle under a visibl
 
 ### 2.2 Novel UX Patterns
 
-None required; the loop fits standard mobile game patterns (timer, lives, score, summary). Focus on polish: readable numerals, urgent yet calm timer cues, non-blocking ads between sessions.
+Animated emoji state avatar (Story 1.6) adds an emotional mirror that shifts with gameplay context without stealing focus from puzzle/timer. Behaviors: gentle idle per state, quick transitions (<=400ms) on lives/timer/game-over changes, then calm idle. Reduce-motion: auto-fallback to static PNG; respect OS setting. Palette: subtle Sunset Punch halo/ground so the emoji reads on light surfaces.
 
 ---
 
@@ -55,6 +55,14 @@ Clean card-based layout with oversized numerals and prominent timer ring/bar. Po
 
 **Interactive Mockups:** Not generated in this pass.
 
+### 4.2 Animated Emoji Avatar (Story 1.6)
+
+- Placement: Difficulty screen hero card right/top aligned; Gameplay HUD left of timer (compact variant); Game Over large beside summary card. Keep puzzle/timer dominant; cap avatar size.
+- States & mapping: Difficulty = face-grinning.json; Gameplay: 5=face-laughing/face-grinning, 4=face-smiling, 3=face-grimacing, 2=face-flushed, 1=face-fearful, timer<=3s=face-cold-sweat; Game Over=face-dizzy.
+- Motion: Loop gently per state; transition between states in <=400ms with brief cross-fade/scale; after life loss, run the new state for ~2-3s then settle to idle. No screen shake.
+- Accessibility & fallbacks: Honor OS reduce-motion; if true or asset load fails, show static PNG with same art. Semantic label example: "Player avatar worried, 1 life left, timer critical." Maintain contrast with soft halo.
+- Performance: Preload current + next-likely state (life-1 and timer panic). Keep Lottie files small; cap avatar size to avoid jank on low-end devices.
+
 ---
 
 ## 5. User Journey Flows
@@ -76,12 +84,19 @@ Clean card-based layout with oversized numerals and prominent timer ring/bar. Po
 **Journey: Settings & Controls (MVP)**  
 1) Header/overflow: toggles for sound and haptics.  
 2) Note: applies immediately; persists across sessions.  
-3) Link: “About ads” (explains between-session only, fail-open offline).
 
-**Journey: Offline / Ad Fail (MVP)**  
-1) Detect offline: banner “Offline — puzzles still work. Ads skipped.”  
+**Journey: Offline (optional)**  
+1) Detect offline: banner "Offline � puzzles still work."  
 2) No blocking dialogs; play flow unchanged.  
-3) When back online, ads resume between sessions.
+3) When back online, nothing changes for gameplay (no network dependency).
+
+
+**Journey: Emotional State Indicators (Story 1.6)**  
+1) Enter Difficulty: avatar welcomes (face-grinning), sized as accent, not focal.  
+2) Gameplay loop: avatar updates per lives/timer; urgency swap at <=3s.  
+3) Life loss: swap to new state, brief attention draw (small scale + pulse), then return to idle.  
+4) Game Over: face-dizzy beside summary; offers restart CTA nearby.  
+5) Reduce-motion path: static PNG shown; no pulses.
 
 ---
 
@@ -98,7 +113,16 @@ Use native buttons, lists, modals. Custom/lightly styled components aligned to p
 - Game Over Summary Card: white surface on Lynx White background; CTAs use primary filled and secondary outline.  
 - Ads Gate Overlay: lightweight overlay with spinner/text; no modal blocks.
 
-State considerations: default, press/hover (where applicable), active, error/wrong, success, disabled (ads loading). Accessibility: visible focus rings on buttons, readable text labels on timers and feedback messages.
+State considerations: default, press/hover (where applicable), active, error/wrong, success, disabled. Accessibility: visible focus rings on buttons, readable text labels on timers and feedback messages.
+
+**EmojiAvatarWidget (Story 1.6)**  
+- Props: `lives:int (0-5)`, `remainingSeconds:int`, `gameOver:bool`, `isDifficultyScreen:bool`, `reduceMotion:bool?` (defaults to OS).  
+- Variants: Compact (HUD, 48-64dp) and Hero (difficulty/game over, 96-120dp). Left-align in HUD to avoid covering timer/puzzle.  
+- States: welcoming, laughing, smiling, grimacing, flushed, fearful, cold-sweat (timer panic), dizzy (game over). Each with idle loop + micro-breathing when stable.  
+- Behavior: Transition on life change or timer<=3; cross-fade/scale-in; cap animation burst to <1.5s before settling; do not block input.  
+- Assets: Prefer Lottie in `assets/animated_emoji/`; fallback static PNGs in same folder; declare in `pubspec.yaml`.  
+- Accessibility: Semantic label includes emotion + context (lives, timer). Respect reduce-motion; when true or asset load fails, show static frame without pulses.  
+- Performance: Preload current and next-likely state; keep asset size small; avoid simultaneous large GIF/Lottie elsewhere.
 
 ---
 
@@ -107,9 +131,9 @@ State considerations: default, press/hover (where applicable), active, error/wro
 ### 7.1 Consistency Rules
 
 - Buttons: Primary = filled orange (#D14A28) with white text + visible focus ring; Secondary = Seabrook outline with light fill on press; Destructive (rare) = error red.  
-- Feedback: Success inline flash + optional toast; Error inline flash/red + brief toast; Loading = spinner in overlays only.  
+- Feedback: Success inline flash + optional toast; Error inline flash/red + brief toast; Loading = spinner in overlays only. Emoji avatar mirrors state changes without blocking puzzle (life loss, timer panic, game over).  
 - Forms/Inputs: Labels above; inline validation on submit or error; concise helper text.  
-- Modals: Avoid during play; Game Over as full-screen sheet; ads gate as lightweight overlay.  
+- Modals: Avoid during play; Game Over as full-screen sheet; minimal overlays only when needed (no ads gate).  
 - Navigation: Single-stack portrait flow; back from difficulty to Home; in-run back disabled to prevent accidental exits.  
 - Empty states: Friendly icon + single CTA.  
 - Confirmation: Only for exiting mid-session (if enabled) or resetting data.  
@@ -130,8 +154,9 @@ Primary: mobile portrait.
 Accessibility (target WCAG 2.1 AA):  
 - Contrast: meet AA for text/icons; timer/lives states distinguishable by shape + color.  
 - Keyboard/focus support for accessibility modes; visible focus rings.  
-- Screen reader labels: timer, lives count, “x lives left,” “correct/wrong,” “time’s up,” “ad loading/skipped.”  
-- Touch targets: >=48dp; avoid tightly packed answers.
+- Screen reader labels: timer, lives count, 'x lives left', 'correct/wrong', 'time's up', 'ad loading/skipped', emoji avatar emotion + context.  
+- Touch targets: >=48dp; avoid tightly packed answers.  
+- Motion sensitivity: honor OS reduce-motion; emoji avatar falls back to static frame; avoid shakes/flash.
 
 ---
 
@@ -139,10 +164,10 @@ Accessibility (target WCAG 2.1 AA):
 
 ### 9.1 Completion Summary
 
-- Core loops defined: start -> timed puzzle -> feedback -> summary -> restart with between-session ads.  
-- Components: puzzle card, timer, lives, answer grid, summary card, ads gate, toggles.  
+- Core loops defined: start -> timed puzzle -> feedback -> summary -> restart (no ads in scope); Story 1.6 avatar mirrors state changes.  
+- Components: puzzle card, timer, lives, answer grid, emoji avatar, summary card, toggles.  
 - Patterns: primary/secondary buttons, inline feedback, non-blocking overlays, AA contrast, large tap targets.  
-- Offline/fail-open: ads never block play; clear banner when offline.  
+- Offline: gameplay continues without network; optional banner for awareness.  
 - References: PRD/epics aligned; future hooks (leaderboard/daily/badges) remain hidden placeholders.
 
 ---
@@ -177,7 +202,14 @@ _None added in this pass._
 | ---------- | ------- | ---------------------------------------------------- | ------ |
 | 2025-11-29 | 1.0     | Initial UX Design Specification                      | Jabran |
 | 2025-11-29 | 1.1     | Updated to Sunset Punch palette and component states | Jabran |
+| 2025-11-29 | 1.2     | Added Story 1.6 animated emoji UX (placement, states, accessibility, component spec) | Jabran |
 
 ---
 
 _This UX Design Specification was created through collaborative design facilitation. Decisions emphasize speed, clarity, and non-intrusive monetization for funnums’ timed number-puzzle experience._
+
+
+
+
+
+

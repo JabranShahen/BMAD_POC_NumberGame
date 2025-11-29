@@ -52,6 +52,23 @@ class _GameOverScreenState extends State<GameOverScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Row(
+              children: [
+                const _GameOverEmoji(),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      Text('Tough break this run', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
+                      SizedBox(height: 4),
+                      Text('Your score is saved. Ready for another try?', style: TextStyle(fontSize: 13)),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
             Text('Mode: $_mode', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
             const SizedBox(height: 12),
             Card(
@@ -85,6 +102,33 @@ class _GameOverScreenState extends State<GameOverScreen> {
             )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _GameOverEmoji extends StatelessWidget {
+  const _GameOverEmoji();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.red.shade50,
+        shape: BoxShape.circle,
+        border: Border.all(color: Colors.red.shade200),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.04),
+            blurRadius: 8,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: const Text(
+        '😵',
+        style: TextStyle(fontSize: 32),
       ),
     );
   }

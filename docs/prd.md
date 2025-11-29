@@ -8,14 +8,14 @@
 
 ## Executive Summary
 
-funnums is a casual mobile number-puzzle game where players spot the missing number in a series under time pressure. It targets short, repeatable play sessions with three difficulty tiers, motivating progression via scores, history, and "solved" counters. It balances quick cognitive challenge with lightweight, friendly UX to avoid player fatigue.
+ funnums is a casual mobile number-puzzle game where players spot the missing number in a series under time pressure. It targets short, repeatable play sessions with three difficulty tiers, motivating progression via scores, history, and "solved" counters. It balances quick cognitive challenge with lightweight, friendly UX to avoid player fatigue. Ads are out of scope for the current release.
 
 ### What Makes This Special
 
 - Time-pressure format for instinctive reasoning and rapid decision-making  
 - Difficulty curves tuned per mode with strict answer windows  
-- Motivational feedback (sound/animation) and persistent history/achievements  
-- Minimal, non-intrusive ads between sessions only
+ - Motivational feedback (sound/animation) and persistent history/achievements  
+ - No ads in current scope; focus on core loop and progression
 
 ---
 
@@ -29,7 +29,7 @@ Product type: mobile puzzle app focused on fast-turn numeric challenges. Domain 
 
 ### Domain Context
 
-Casual, non-regulated; primary concerns are playability, performance on low-end devices, and clean ad placement.
+ Casual, non-regulated; primary concerns are playability and performance on low-end devices.
 
 ---
 
@@ -37,9 +37,8 @@ Casual, non-regulated; primary concerns are playability, performance on low-end 
 
 Desired outcomes center on sticky short sessions, replay, and clarity of challenge across difficulty tiers:
 - Players understand gameplay in under 1 minute
-- High completion rate of at least one session per install
-- Meaningful progression signals (scores, bests, solved counts)
-- Ads placed only between sessions to avoid UX friction
+ - High completion rate of at least one session per install
+ - Meaningful progression signals (scores, bests, solved counts)
 
 ### Business Metrics
 
@@ -47,8 +46,7 @@ Desired outcomes center on sticky short sessions, replay, and clarity of challen
 - Average Session Time  
 - Average Sessions Per User (ASPU)  
 - Player retention (D1/D7/D30)  
-- Ad impressions per active user  
-- Puzzle completion rate per difficulty level
+ - Puzzle completion rate per difficulty level
 
 ---
 
@@ -63,15 +61,14 @@ Desired outcomes center on sticky short sessions, replay, and clarity of challen
 - Score & historical record storage per mode  
 - “Solved count” by difficulty and best-score tracking  
 - Sound on/off toggle  
-- Animated feedback for correct / wrong answers  
-- Minimal interstitial ads only between game sessions
+ - Animated feedback for correct / wrong answers  
 
 ### Growth Features (Post-MVP)
 
 - Live global leaderboards  
 - Daily puzzle challenges  
 - Reward badges and achievement systems  
-- Optional offline mode without ads  
+ - Optional offline mode without ads  
 - Adaptive puzzles that learn user difficulty tolerance  
 - Teacher/parent dashboard for educational analytics
 
@@ -106,7 +103,7 @@ N/A (treated as general/casual; no regulated or high-risk domain constraints).
 Mobile requirements (from product type signals):
 - Platform requirements: Android/iOS support; performant on low-end devices; portrait orientation; responsive layouts for phones/tablets.
 - Device capabilities: lightweight audio; haptics optional; no invasive permissions.
-- Offline mode: puzzle logic works offline; scores stored locally; ad delivery handled gracefully when offline (fallback to no-ad).
+ - Offline mode: puzzle logic works offline; scores stored locally.
 - Push strategy: optional future use for streaks/challenges; not in MVP.
 - Store compliance: adhere to Google Play / App Store guidelines; age-appropriate content; ad placements compliant with policies.
 
@@ -142,17 +139,13 @@ Mobile requirements (from product type signals):
 - FR-011 [MVP]: The app provides optional audio feedback; players can toggle sound on/off.
 - FR-012 [MVP]: The game-over screen summarizes score, best score, solved count, and play-again CTA.
 
-**Ads & Monetization**
-- FR-013 [MVP]: Interstitial ads appear only between sessions (never mid-puzzle).
-- FR-014 [MVP]: If offline or an ad fails to load, the session proceeds without blocking gameplay. Ad load/fail timeout must not exceed 2 seconds before starting play.
-
 **Settings & Device Behavior**
-- FR-015 [MVP]: Players can toggle sound and (if available) haptics in settings or inline control.
-- FR-016 [MVP]: The app preserves state locally so users can resume after app interruption (same session or clean restart per chosen approach). If session restore is not supported, app must end the session cleanly and preserve prior records/settings.
+- FR-013 [MVP]: Players can toggle sound and (if available) haptics in settings or inline control.
+- FR-014 [MVP]: The app preserves state locally so users can resume after app interruption (same session or clean restart per chosen approach). If session restore is not supported, app must end the session cleanly and preserve prior records/settings.
 
 **Content & Data**
-- FR-017 [MVP]: Puzzle generation uses curated datasets per difficulty to avoid repeats in short runs.
-- FR-018 [MVP]: All game state (scores, solved counts, bests, settings) is stored locally on device.
+- FR-015 [MVP]: Puzzle generation uses curated datasets per difficulty to avoid repeats in short runs.
+- FR-016 [MVP]: All game state (scores, solved counts, bests, settings) is stored locally on device.
 
 ### User Stories with Acceptance Criteria
 
@@ -172,11 +165,7 @@ Acceptance: a) Score increments on correct answers; b) Best score per difficulty
 As a player, I want instant feedback and control over sound so the game feels responsive.  
 Acceptance: a) Correct/wrong visual cues shown immediately; b) Optional sounds tied to events; c) Sound toggle persists across sessions.
 
-5) Ads between sessions only  
-As a player, I want ads to appear only between sessions so gameplay is not interrupted.  
-Acceptance: a) No ads during puzzles or timers; b) Interstitial only after session end and before next start; c) If ad fails or offline, session can start without blocking.
-
-6) Persistence  
+5) Persistence  
 As a player, I want my scores and settings saved locally so I don't lose progress.  
 Acceptance: a) Scores/bests/solved counts stored on device; b) Settings (sound/haptics) persist; c) App relaunch preserves saved data.
 
@@ -201,13 +190,9 @@ Acceptance: a) Scores/bests/solved counts stored on device; b) Settings (sound/h
 
 ### Availability / Offline
 - Core gameplay fully offline; no dependency on network for puzzles or scores.
-- Ads are best-effort; lack of network must not block new sessions.
 
 ### Compatibility
 - Android and iOS current + 2 OS versions; portrait-first layouts; handle notch/safe areas.
-
-### Integration
-- Ad network: interstitial placements only between sessions; fail-open behavior.
 
 ### Maintainability & Quality
 - Deterministic puzzle validation (no ambiguous answers).
@@ -216,13 +201,12 @@ Acceptance: a) Scores/bests/solved counts stored on device; b) Settings (sound/h
 ---
 
 ## PRD Summary
-- FR count: 18 across gameplay core, scoring/progression, feedback/UX, ads, settings/persistence, and content/data.
-- NFR coverage: performance (with timer targets), security/privacy, accessibility/UX quality, offline/availability, compatibility, integration (ads), maintainability.
-- MVP scope: timed missing-number puzzles with three difficulty tiers, lives, score/best/solved history, visual/audio feedback, between-session ads only.
+- FR count: 16 across gameplay core, scoring/progression, feedback/UX, settings/persistence, and content/data.
+- NFR coverage: performance (with timer targets), security/privacy, accessibility/UX quality, offline/availability, compatibility, maintainability.
+- MVP scope: timed missing-number puzzles with three difficulty tiers, lives, score/best/solved history, visual/audio feedback; no ads in scope.
 
 ## Product Value Summary
 - Quick, repeatable cognitive challenge with low friction and clear progression signals.
-- Respectful monetization (interstitials only between sessions) to preserve flow.
 - Offline-friendly gameplay with lightweight assets for broad device reach.
 
 ---
@@ -232,6 +216,6 @@ Acceptance: a) Scores/bests/solved counts stored on device; b) Settings (sound/h
 
 ---
 
-_This PRD captures the essence of funnums - mobile number-puzzle gameplay with time-pressure, progression, and lightweight monetization._
+_This PRD captures the essence of funnums - mobile number-puzzle gameplay with time-pressure, progression, and no ads in scope._
 
 _Created through collaborative discovery between Jabran and AI facilitator._

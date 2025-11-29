@@ -242,19 +242,56 @@ class _Header extends StatelessWidget {
           bottomRight: Radius.circular(16),
         ),
       ),
-      child: const Column(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Choose your challenge',
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: Colors.white),
+          const Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Choose your challenge',
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: Colors.white),
+                ),
+                SizedBox(height: 6),
+                Text(
+                  'Pick a pace that fits you. Best score and last run shown for each mode.',
+                  style: TextStyle(fontSize: 14, color: Colors.white),
+                ),
+              ],
+            ),
           ),
-          SizedBox(height: 6),
-          Text(
-            'Pick a pace that fits you. Best score and last run shown for each mode.',
-            style: TextStyle(fontSize: 14, color: Colors.white),
+          const SizedBox(width: 12),
+          const _EmojiBadge(emoji: '😄'),
+        ],
+      ),
+    );
+  }
+}
+
+class _EmojiBadge extends StatelessWidget {
+  final String emoji;
+  const _EmojiBadge({required this.emoji});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.16),
+        shape: BoxShape.circle,
+        border: Border.all(color: Colors.white.withOpacity(0.28)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 8,
+            offset: const Offset(0, 3),
           ),
         ],
+      ),
+      child: Text(
+        emoji,
+        style: const TextStyle(fontSize: 26),
       ),
     );
   }

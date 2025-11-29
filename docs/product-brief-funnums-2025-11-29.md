@@ -34,7 +34,6 @@ Existing numeric puzzle apps often:
 - use slow turn-based mechanics rather than continuous active puzzles
 - provide minimal reward feedback loops
 - lack persistent score tracking and motivational progression indicators
-- show too many intrusive ads or lack user-friendly monetization
 
 ### Proposed Solution
 
@@ -44,7 +43,7 @@ funnums offers:
 - scoring, record-keeping, and solved counters for continual motivation
 - difficulty levels tuned for different player skill tiers
 - multi-platform accessibility and lightweight performance
-- subtle, non-intrusive ad placement only between gameplay sessions
+- no ads in current scope; focus on core loop quality
 
 ### Key Differentiators
 
@@ -98,7 +97,7 @@ funnums offers:
 - Average Session Time  
 - Average Sessions Per User (ASPU)  
 - Player Retention after day 1 / day 7 / day 30  
-- Ad impressions per active user  
+-   
 - Puzzle completion rate per difficulty level  
 
 ---
@@ -115,7 +114,7 @@ funnums offers:
 - Sound on/off feature  
 - “Solved count” by difficulty  
 - Animated feedback for correct / wrong answers  
-- Minimal interstitial ads only between game sessions  
+-   
 
 ### Out of Scope for MVP
 
@@ -137,7 +136,7 @@ funnums offers:
 - Live global leaderboards  
 - Daily puzzle challenges  
 - Reward badges and achievement systems  
-- Optional offline mode without ads  
+- Optional offline mode  
 - Adaptive puzzles that learn user difficulty tolerance  
 - Teacher / parent dashboard for educational analytics  
 
@@ -162,14 +161,8 @@ funnums differentiates through short-burst numerical puzzles with motivational p
 
 ## Financial Considerations
 
-- Free-to-play model  
-- Revenue via:  
-  - Google AdMob banner ads  
-  - Occasional interstitial ads before sessions  
-- Future monetization:  
-  - remove-ads option via one-time purchase  
-  - premium puzzle packs  
-  - educational version licensing  
+- Monetization deferred; no ads in current scope.  
+- Future options (when/if reintroduced): premium puzzle packs or paid tiers; avoid intrusive ads.  
 
 ---
 
@@ -192,7 +185,6 @@ Project structure enables collaboration with additional designers or developers 
 
 ## Risks and Assumptions
 
-- Risk: Over-serving ads may hurt retention  
 - Risk: Puzzle logic must not become predictable or repetitive  
 - Assumption: Users will replay multiple short sessions  
 - Assumption: Existing device-based score persistence is acceptable for MVP  

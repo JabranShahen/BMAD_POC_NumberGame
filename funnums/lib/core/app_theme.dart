@@ -60,12 +60,12 @@ class AppTheme {
           ),
         ),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: Colors.white,
         elevation: 4,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         surfaceTintColor: Colors.white,
-        shadowColor: _secondary.withAlpha(32),
+        shadowColor: _secondary,
       ),
       chipTheme: ChipThemeData(
         backgroundColor: _secondary.withOpacity(0.08),

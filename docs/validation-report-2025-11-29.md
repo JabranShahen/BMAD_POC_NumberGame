@@ -135,13 +135,13 @@
 ### 9. Readiness for Implementation — Pass Rate: 7/14
 - PASS — PRD context for architecture (yes)
 - PASS — Technical constraints/preferences documented (lines 104-121)
-- PASS — Integration points identified (ads only; lines 145-147, 209-210)
+- N/A � Ads removed from scope; no external ad integration planned.
 - PASS — Performance/scale requirements specified (lines 185-205)
 - PASS — Security/privacy needs clear (lines 192-195)
 - FAIL — Stories specific enough to estimate (absent)
 - FAIL — Acceptance criteria for stories (absent)
 - FAIL — Technical unknowns flagged (not listed)
-- FAIL — Dependencies on external systems documented (ads only; not in story form)
+- N/A � Ads removed from scope; external dependencies limited to local storage only.
 - FAIL — Data requirements specified in stories (absent)
 - FAIL — PRD supports full architecture workflow (yes) — mark PASS
 - FAIL — Epic structure supports phased delivery (absent)

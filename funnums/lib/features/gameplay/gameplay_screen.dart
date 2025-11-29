@@ -166,15 +166,26 @@ class _GameplayScreenState extends State<GameplayScreen> {
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _TimerChip(remaining: _remaining, urgent: urgent),
-            _LivesRow(lives: _lives),
-            _ScoreChip(score: _score),
-          ],
-        ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Wrap(
+                    spacing: 12,
+                    runSpacing: 8,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: [
+                      _TimerChip(remaining: _remaining, urgent: urgent),
+                      _LivesRow(lives: _lives),
+                      _ScoreChip(score: _score),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 12),
+                _StateEmojiAvatar(lives: _lives, remaining: _remaining),
+              ],
+            ),
             const SizedBox(height: 12),
             const Text('Find the missing number', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700)),
             const SizedBox(height: 12),
@@ -314,6 +325,56 @@ class _ScoreChip extends StatelessWidget {
       label: Text(
         'Score: $score',
         style: TextStyle(color: secondary, fontWeight: FontWeight.w700),
+      ),
+    );
+  }
+}
+
+class _StateEmojiAvatar extends StatelessWidget {
+  final int lives;
+  final int remaining;
+  const _StateEmojiAvatar({required this.lives, required this.remaining});
+
+  String _emoji() {
+    if (lives <= 0) return '😵';
+    if (remaining > 0 && remaining <= 3) return '😰';
+    switch (lives) {
+      case 5:
+        return '😄';
+      case 4:
+        return '🙂';
+      case 3:
+        return '😟';
+      case 2:
+        return '😰';
+      default:
+        return '😱';
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    final urgent = remaining > 0 && remaining <= 3;
+    final bg = urgent ? Colors.red.shade50 : colors.secondary.withOpacity(0.12);
+    final border = urgent ? Colors.red.shade200 : colors.secondary.withOpacity(0.35);
+    return Container(
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: bg,
+        shape: BoxShape.circle,
+        border: Border.all(color: border),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 8,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Text(
+        _emoji(),
+        style: const TextStyle(fontSize: 28),
       ),
     );
   }
