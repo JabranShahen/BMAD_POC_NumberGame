@@ -90,7 +90,7 @@ class _EmojiAvatarWidgetState extends State<EmojiAvatarWidget> {
     final emoji = _emojiMap[key] ?? '😀';
     final reduceMotion = widget.reduceMotion ?? MediaQuery.of(context).disableAnimations;
     final hero = widget.isDifficultyScreen || widget.gameOver;
-    final size = hero ? 96.0 : 56.0;
+    final size = hero ? 384.0 : 224.0;
     final bgColor = Theme.of(context).colorScheme.secondary.withOpacity(0.12);
     final borderColor = Theme.of(context).colorScheme.secondary.withOpacity(0.35);
     final semantic = _semanticLabel(emoji);
@@ -111,34 +111,23 @@ class _EmojiAvatarWidgetState extends State<EmojiAvatarWidget> {
             ),
           ],
         ),
-        child: reduceMotion || asset == null
+        child: asset == null
             ? Text(
                 emoji,
-                style: TextStyle(fontSize: hero ? 52 : 28),
+                style: TextStyle(fontSize: hero ? 208 : 112),
               )
-            : FutureBuilder<bool>(
-                future: _assetExists(asset),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState != ConnectionState.done || snapshot.data != true) {
-                    return Text(
-                      emoji,
-                      style: TextStyle(fontSize: hero ? 52 : 28),
-                    );
-                  }
-                  return SizedBox(
-                    width: size,
-                    height: size,
-                    child: Lottie.asset(
-                      asset,
-                      repeat: true,
-                      frameRate: FrameRate.max,
-                      errorBuilder: (_, __, ___) => Text(
-                        emoji,
-                        style: TextStyle(fontSize: hero ? 52 : 28),
-                      ),
-                    ),
-                  );
-                },
+            : SizedBox(
+                width: size,
+                height: size,
+                child: Lottie.asset(
+                  asset,
+                  repeat: true,
+                  frameRate: FrameRate.max,
+                  errorBuilder: (_, __, ___) => Text(
+                    emoji,
+                    style: TextStyle(fontSize: hero ? 208 : 112),
+                  ),
+                ),
               ),
       ),
     );
