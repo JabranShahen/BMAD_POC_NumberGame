@@ -28,18 +28,20 @@ class EmojiAvatarWidget extends StatefulWidget {
 
 class _EmojiAvatarWidgetState extends State<EmojiAvatarWidget> {
   static const _assetMap = {
-    'difficulty': 'assets/animated_emoji/face-grinning.json',
-    'lives5': 'assets/animated_emoji/face-laughing.json',
-    'lives4': 'assets/animated_emoji/face-smiling.json',
-    'lives3': 'assets/animated_emoji/face-grimacing.json',
-    'lives2': 'assets/animated_emoji/face-flushed.json',
-    'lives1': 'assets/animated_emoji/face-fearful.json',
-    'panic': 'assets/animated_emoji/face-cold-sweat.json',
-    'gameover': 'assets/animated_emoji/face-dizzy.json',
+    'difficulty': 'assets/animated_emoji/-grinning-.json',
+    'welcome': 'assets/animated_emoji/-hug-face-.json',
+    'lives5': 'assets/animated_emoji/-laughing-.json',
+    'lives4': 'assets/animated_emoji/-smile-.json',
+    'lives3': 'assets/animated_emoji/-grimacing-.json',
+    'lives2': 'assets/animated_emoji/-flushed-.json',
+    'lives1': 'assets/animated_emoji/-scared-.json',
+    'panic': 'assets/animated_emoji/-cold-face-.json',
+    'gameover': 'assets/animated_emoji/-dizzy-face-.json',
   };
 
   static const _emojiMap = {
     'difficulty': '😀',
+    'welcome': '🤗',
     'lives5': '😁',
     'lives4': '😊',
     'lives3': '😬',
@@ -53,7 +55,11 @@ class _EmojiAvatarWidgetState extends State<EmojiAvatarWidget> {
 
   String _stateKey() {
     if (widget.gameOver || widget.lives <= 0) return 'gameover';
-    if (!widget.isDifficultyScreen && widget.remainingSeconds > 0 && widget.remainingSeconds <= 3) {
+    if (widget.isDifficultyScreen) {
+      print('DEBUG: isDifficultyScreen=true, returning welcome');
+      return 'welcome';
+    }
+    if (widget.remainingSeconds > 0 && widget.remainingSeconds <= 3) {
       return 'panic';
     }
     switch (widget.lives) {
@@ -68,7 +74,7 @@ class _EmojiAvatarWidgetState extends State<EmojiAvatarWidget> {
       case 1:
         return 'lives1';
       default:
-        return widget.isDifficultyScreen ? 'difficulty' : 'lives5';
+        return 'lives5';
     }
   }
 
@@ -90,7 +96,7 @@ class _EmojiAvatarWidgetState extends State<EmojiAvatarWidget> {
     final emoji = _emojiMap[key] ?? '😀';
     final reduceMotion = widget.reduceMotion ?? MediaQuery.of(context).disableAnimations;
     final hero = widget.isDifficultyScreen || widget.gameOver;
-    final size = hero ? 384.0 : 224.0;
+    final size = hero ? 96.0 : 56.0;
     final bgColor = Theme.of(context).colorScheme.secondary.withOpacity(0.12);
     final borderColor = Theme.of(context).colorScheme.secondary.withOpacity(0.35);
     final semantic = _semanticLabel(emoji);
@@ -98,7 +104,8 @@ class _EmojiAvatarWidgetState extends State<EmojiAvatarWidget> {
     return Semantics(
       label: semantic,
       child: Container(
-        padding: EdgeInsets.all(hero ? 14 : 10),
+        width: size,
+        height: size,
         decoration: BoxDecoration(
           color: bgColor,
           shape: BoxShape.circle,
@@ -111,24 +118,24 @@ class _EmojiAvatarWidgetState extends State<EmojiAvatarWidget> {
             ),
           ],
         ),
-        child: asset == null
+        child: Center(
+          child: asset == null
             ? Text(
                 emoji,
                 style: TextStyle(fontSize: hero ? 208 : 112),
               )
-            : SizedBox(
-                width: size,
-                height: size,
-                child: Lottie.asset(
-                  asset,
-                  repeat: true,
-                  frameRate: FrameRate.max,
-                  errorBuilder: (_, __, ___) => Text(
-                    emoji,
-                    style: TextStyle(fontSize: hero ? 208 : 112),
-                  ),
+            : Lottie.asset(
+                asset,
+                width: size * 0.8,
+                height: size * 0.8,
+                repeat: true,
+                frameRate: FrameRate.max,
+                errorBuilder: (_, __, ___) => Text(
+                  emoji,
+                  style: TextStyle(fontSize: hero ? 208 : 112),
                 ),
               ),
+        ),
       ),
     );
   }

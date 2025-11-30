@@ -19,14 +19,15 @@ class GameOverScreen extends StatefulWidget {
 }
 
 class _GameOverScreenState extends State<GameOverScreen> {
-  late final SessionRepository _repo;
+  SessionRepository? _repo;
   bool _saved = false;
-  late final String _mode;
-  late final int _score;
+  String? _mode;
+  int? _score;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    if (_mode != null) return; // Already initialized
     final args = ModalRoute.of(context)?.settings.arguments as GameOverArgs?;
     _mode = args?.mode ?? 'fun';
     _score = args?.score ?? 0;
@@ -35,11 +36,11 @@ class _GameOverScreenState extends State<GameOverScreen> {
   }
 
   Future<void> _persistOnce() async {
-    if (_saved) return;
+    if (_saved || _repo == null) return;
     _saved = true;
-    await _repo.initialize();
-    await _repo.saveBestScore(_mode, _score);
-    await _repo.saveLastScore(_mode, _score);
+    await _repo!.initialize();
+    await _repo!.saveBestScore(_mode!, _score!);
+    await _repo!.saveLastScore(_mode!, _score!);
   }
 
   @override
@@ -75,7 +76,7 @@ class _GameOverScreenState extends State<GameOverScreen> {
               ],
             ),
             const SizedBox(height: 12),
-            Text('Mode: $_mode', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
+            Text('Mode: ${_mode ?? 'fun'}', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
             const SizedBox(height: 12),
             Card(
               child: Padding(
@@ -85,7 +86,7 @@ class _GameOverScreenState extends State<GameOverScreen> {
                   children: [
                     const Text('Score', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
                     const SizedBox(height: 8),
-                    Text(_score.toString(), style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
+                    Text((_score ?? 0).toString(), style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
                   ],
                 ),
               ),
@@ -95,7 +96,7 @@ class _GameOverScreenState extends State<GameOverScreen> {
               children: [
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: () => Navigator.pushReplacementNamed(context, AppRoutes.gameplay, arguments: {'mode': _mode}),
+                    onPressed: () => Navigator.pushReplacementNamed(context, AppRoutes.gameplay, arguments: {'mode': _mode ?? 'fun'}),
                     child: const Text('Play again'),
                   ),
                 ),
