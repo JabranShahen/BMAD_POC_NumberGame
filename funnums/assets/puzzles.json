@@ -1,58 +1,858 @@
 {
   "fun": [
-    {"id":"fun_001","sequence":[1,2,3,4],"missingIndex":2,"options":[3,4,5,6],"answer":3},
-    {"id":"fun_002","sequence":[2,4,8,16],"missingIndex":2,"options":[6,8,10,12],"answer":8},
-    {"id":"fun_003","sequence":[5,10,20,40],"missingIndex":2,"options":[15,20,25,30],"answer":20},
-    {"id":"fun_004","sequence":[4,8,16,32],"missingIndex":2,"options":[12,14,16,18],"answer":16},
-    {"id":"fun_005","sequence":[3,9,27,81],"missingIndex":2,"options":[18,21,27,30],"answer":27},
-    {"id":"fun_006","sequence":[6,12,24,48],"missingIndex":2,"options":[18,20,22,24],"answer":24},
-    {"id":"fun_007","sequence":[7,14,28,56],"missingIndex":2,"options":[21,25,28,30],"answer":28},
-    {"id":"fun_008","sequence":[9,18,36,72],"missingIndex":2,"options":[27,32,36,40],"answer":36},
-    {"id":"fun_009","sequence":[2,4,8,16],"missingIndex":1,"options":[3,4,5,6],"answer":4},
-    {"id":"fun_010","sequence":[1,5,25,125],"missingIndex":2,"options":[15,20,25,30],"answer":25},
-    {"id":"fun_011","sequence":[8,16,32,64],"missingIndex":2,"options":[20,24,28,32],"answer":32},
-    {"id":"fun_012","sequence":[4,8,12,16],"missingIndex":1,"options":[6,8,10,12],"answer":8},
-    {"id":"fun_013","sequence":[10,20,40,80],"missingIndex":2,"options":[30,35,40,45],"answer":40},
-    {"id":"fun_014","sequence":[2,3,6,12],"missingIndex":2,"options":[4,5,6,7],"answer":6},
-    {"id":"fun_015","sequence":[1,3,6,10],"missingIndex":2,"options":[4,5,6,7],"answer":6},
-    {"id":"fun_016","sequence":[6,18,54,162],"missingIndex":2,"options":[27,36,45,54],"answer":54},
-    {"id":"fun_017","sequence":[3,6,18,72],"missingIndex":2,"options":[12,15,18,20],"answer":18},
-    {"id":"fun_018","sequence":[5,15,45,135],"missingIndex":2,"options":[30,35,40,45],"answer":45},
-    {"id":"fun_019","sequence":[4,6,12,30],"missingIndex":2,"options":[8,10,12,14],"answer":12},
-    {"id":"fun_020","sequence":[2,5,15,45],"missingIndex":2,"options":[10,12,15,18],"answer":15}
+    {
+      "id": "fun_021",
+      "sequence": [
+        2,
+        5,
+        8,
+        11
+      ],
+      "missingIndex": 2,
+      "options": [
+        6,
+        7,
+        8,
+        9
+      ],
+      "answer": 8
+    },
+    {
+      "id": "fun_022",
+      "sequence": [
+        3,
+        7,
+        11,
+        15
+      ],
+      "missingIndex": 1,
+      "options": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "answer": 7
+    },
+    {
+      "id": "fun_023",
+      "sequence": [
+        4,
+        9,
+        14,
+        19
+      ],
+      "missingIndex": 2,
+      "options": [
+        10,
+        12,
+        14,
+        16
+      ],
+      "answer": 14
+    },
+    {
+      "id": "fun_024",
+      "sequence": [
+        1,
+        7,
+        13,
+        19
+      ],
+      "missingIndex": 2,
+      "options": [
+        11,
+        12,
+        13,
+        14
+      ],
+      "answer": 13
+    },
+    {
+      "id": "fun_025",
+      "sequence": [
+        5,
+        12,
+        19,
+        26
+      ],
+      "missingIndex": 1,
+      "options": [
+        10,
+        11,
+        12,
+        13
+      ],
+      "answer": 12
+    },
+    {
+      "id": "fun_026",
+      "sequence": [
+        6,
+        10,
+        15,
+        21
+      ],
+      "missingIndex": 2,
+      "options": [
+        13,
+        14,
+        15,
+        16
+      ],
+      "answer": 15
+    },
+    {
+      "id": "fun_027",
+      "sequence": [
+        2,
+        4,
+        7,
+        11
+      ],
+      "missingIndex": 2,
+      "options": [
+        6,
+        7,
+        8,
+        9
+      ],
+      "answer": 7
+    },
+    {
+      "id": "fun_028",
+      "sequence": [
+        3,
+        6,
+        10,
+        15
+      ],
+      "missingIndex": 1,
+      "options": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "answer": 6
+    },
+    {
+      "id": "fun_029",
+      "sequence": [
+        2,
+        3,
+        5,
+        8
+      ],
+      "missingIndex": 2,
+      "options": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "answer": 5
+    },
+    {
+      "id": "fun_030",
+      "sequence": [
+        3,
+        5,
+        8,
+        13
+      ],
+      "missingIndex": 2,
+      "options": [
+        6,
+        7,
+        8,
+        9
+      ],
+      "answer": 8
+    },
+    {
+      "id": "fun_031",
+      "sequence": [
+        20,
+        17,
+        14,
+        11
+      ],
+      "missingIndex": 1,
+      "options": [
+        15,
+        16,
+        17,
+        18
+      ],
+      "answer": 17
+    },
+    {
+      "id": "fun_032",
+      "sequence": [
+        4,
+        6,
+        8,
+        10
+      ],
+      "missingIndex": 2,
+      "options": [
+        6,
+        7,
+        8,
+        9
+      ],
+      "answer": 8
+    },
+    {
+      "id": "fun_033",
+      "sequence": [
+        7,
+        9,
+        11,
+        13
+      ],
+      "missingIndex": 1,
+      "options": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "answer": 9
+    },
+    {
+      "id": "fun_034",
+      "sequence": [
+        4,
+        9,
+        16,
+        25
+      ],
+      "missingIndex": 2,
+      "options": [
+        14,
+        15,
+        16,
+        18
+      ],
+      "answer": 16
+    },
+    {
+      "id": "fun_035",
+      "sequence": [
+        9,
+        16,
+        25,
+        36
+      ],
+      "missingIndex": 1,
+      "options": [
+        14,
+        15,
+        16,
+        17
+      ],
+      "answer": 16
+    },
+    {
+      "id": "fun_036",
+      "sequence": [
+        2,
+        5,
+        11,
+        20
+      ],
+      "missingIndex": 2,
+      "options": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "answer": 11
+    },
+    {
+      "id": "fun_037",
+      "sequence": [
+        1,
+        3,
+        7,
+        9
+      ],
+      "missingIndex": 2,
+      "options": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "answer": 7
+    },
+    {
+      "id": "fun_038",
+      "sequence": [
+        2,
+        3,
+        6,
+        11
+      ],
+      "missingIndex": 1,
+      "options": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "answer": 3
+    },
+    {
+      "id": "fun_039",
+      "sequence": [
+        10,
+        20,
+        30,
+        40
+      ],
+      "missingIndex": 2,
+      "options": [
+        25,
+        30,
+        35,
+        40
+      ],
+      "answer": 30
+    },
+    {
+      "id": "fun_040",
+      "sequence": [
+        30,
+        26,
+        21,
+        15
+      ],
+      "missingIndex": 2,
+      "options": [
+        19,
+        20,
+        21,
+        22
+      ],
+      "answer": 21
+    }
   ],
   "medium": [
-    {"id":"med_001","sequence":[3,6,12,24],"missingIndex":2,"options":[8,10,12,14],"answer":12},
-    {"id":"med_002","sequence":[1,4,16,64],"missingIndex":2,"options":[8,12,16,20],"answer":16},
-    {"id":"med_003","sequence":[7,14,28,56],"missingIndex":2,"options":[18,20,28,30],"answer":28},
-    {"id":"med_004","sequence":[2,4,8,16],"missingIndex":1,"options":[3,4,5,6],"answer":4},
-    {"id":"med_005","sequence":[4,8,12,16],"missingIndex":1,"options":[6,8,10,12],"answer":8},
-    {"id":"med_006","sequence":[6,24,96,384],"missingIndex":2,"options":[48,72,96,120],"answer":96},
-    {"id":"med_007","sequence":[3,12,48,192],"missingIndex":2,"options":[24,36,48,56],"answer":48},
-    {"id":"med_008","sequence":[9,27,81,243],"missingIndex":2,"options":[45,54,72,81],"answer":81},
-    {"id":"med_009","sequence":[8,24,72,216],"missingIndex":2,"options":[36,48,64,72],"answer":72},
-    {"id":"med_010","sequence":[5,25,125,625],"missingIndex":2,"options":[75,100,125,150],"answer":125},
-    {"id":"med_011","sequence":[4,16,64,256],"missingIndex":2,"options":[24,32,48,64],"answer":64},
-    {"id":"med_012","sequence":[2,6,18,54],"missingIndex":2,"options":[12,18,24,30],"answer":18},
-    {"id":"med_013","sequence":[7,21,63,189],"missingIndex":2,"options":[42,48,54,63],"answer":63},
-    {"id":"med_014","sequence":[3,15,75,375],"missingIndex":2,"options":[45,60,75,90],"answer":75},
-    {"id":"med_015","sequence":[9,36,144,576],"missingIndex":2,"options":[72,100,120,144],"answer":144}
+    {
+      "id": "med_001",
+      "sequence": [
+        3,
+        6,
+        12,
+        24
+      ],
+      "missingIndex": 2,
+      "options": [
+        8,
+        10,
+        12,
+        14
+      ],
+      "answer": 12
+    },
+    {
+      "id": "med_002",
+      "sequence": [
+        1,
+        4,
+        16,
+        64
+      ],
+      "missingIndex": 2,
+      "options": [
+        8,
+        12,
+        16,
+        20
+      ],
+      "answer": 16
+    },
+    {
+      "id": "med_003",
+      "sequence": [
+        7,
+        14,
+        28,
+        56
+      ],
+      "missingIndex": 2,
+      "options": [
+        18,
+        20,
+        28,
+        30
+      ],
+      "answer": 28
+    },
+    {
+      "id": "med_004",
+      "sequence": [
+        2,
+        4,
+        8,
+        16
+      ],
+      "missingIndex": 1,
+      "options": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "answer": 4
+    },
+    {
+      "id": "med_005",
+      "sequence": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "missingIndex": 1,
+      "options": [
+        6,
+        8,
+        10,
+        12
+      ],
+      "answer": 8
+    },
+    {
+      "id": "med_006",
+      "sequence": [
+        6,
+        24,
+        96,
+        384
+      ],
+      "missingIndex": 2,
+      "options": [
+        48,
+        72,
+        96,
+        120
+      ],
+      "answer": 96
+    },
+    {
+      "id": "med_007",
+      "sequence": [
+        3,
+        12,
+        48,
+        192
+      ],
+      "missingIndex": 2,
+      "options": [
+        24,
+        36,
+        48,
+        56
+      ],
+      "answer": 48
+    },
+    {
+      "id": "med_008",
+      "sequence": [
+        9,
+        27,
+        81,
+        243
+      ],
+      "missingIndex": 2,
+      "options": [
+        45,
+        54,
+        72,
+        81
+      ],
+      "answer": 81
+    },
+    {
+      "id": "med_009",
+      "sequence": [
+        8,
+        24,
+        72,
+        216
+      ],
+      "missingIndex": 2,
+      "options": [
+        36,
+        48,
+        64,
+        72
+      ],
+      "answer": 72
+    },
+    {
+      "id": "med_010",
+      "sequence": [
+        5,
+        25,
+        125,
+        625
+      ],
+      "missingIndex": 2,
+      "options": [
+        75,
+        100,
+        125,
+        150
+      ],
+      "answer": 125
+    },
+    {
+      "id": "med_011",
+      "sequence": [
+        4,
+        16,
+        64,
+        256
+      ],
+      "missingIndex": 2,
+      "options": [
+        24,
+        32,
+        48,
+        64
+      ],
+      "answer": 64
+    },
+    {
+      "id": "med_012",
+      "sequence": [
+        2,
+        6,
+        18,
+        54
+      ],
+      "missingIndex": 2,
+      "options": [
+        12,
+        18,
+        24,
+        30
+      ],
+      "answer": 18
+    },
+    {
+      "id": "med_013",
+      "sequence": [
+        7,
+        21,
+        63,
+        189
+      ],
+      "missingIndex": 2,
+      "options": [
+        42,
+        48,
+        54,
+        63
+      ],
+      "answer": 63
+    },
+    {
+      "id": "med_014",
+      "sequence": [
+        3,
+        15,
+        75,
+        375
+      ],
+      "missingIndex": 2,
+      "options": [
+        45,
+        60,
+        75,
+        90
+      ],
+      "answer": 75
+    },
+    {
+      "id": "med_015",
+      "sequence": [
+        9,
+        36,
+        144,
+        576
+      ],
+      "missingIndex": 2,
+      "options": [
+        72,
+        100,
+        120,
+        144
+      ],
+      "answer": 144
+    }
   ],
   "hard": [
-    {"id":"hard_001","sequence":[2,6,18,54],"missingIndex":2,"options":[12,18,24,30],"answer":18},
-    {"id":"hard_002","sequence":[1,3,9,27],"missingIndex":2,"options":[6,9,12,15],"answer":9},
-    {"id":"hard_003","sequence":[4,20,100,500],"missingIndex":2,"options":[50,60,80,100],"answer":100},
-    {"id":"hard_004","sequence":[9,27,81,243],"missingIndex":2,"options":[45,54,72,81],"answer":81},
-    {"id":"hard_005","sequence":[3,15,75,375],"missingIndex":2,"options":[45,60,75,90],"answer":75},
-    {"id":"hard_006","sequence":[5,25,125,625],"missingIndex":2,"options":[75,100,125,150],"answer":125},
-    {"id":"hard_007","sequence":[2,10,50,250],"missingIndex":2,"options":[30,40,50,60],"answer":50},
-    {"id":"hard_008","sequence":[6,18,54,162],"missingIndex":2,"options":[27,36,45,54],"answer":54},
-    {"id":"hard_009","sequence":[7,21,63,189],"missingIndex":2,"options":[42,48,56,63],"answer":63},
-    {"id":"hard_010","sequence":[8,32,128,512],"missingIndex":2,"options":[64,96,128,192],"answer":128},
-    {"id":"hard_011","sequence":[4,8,32,256],"missingIndex":2,"options":[16,24,32,48],"answer":32},
-    {"id":"hard_012","sequence":[3,9,27,81],"missingIndex":2,"options":[18,22,27,32],"answer":27},
-    {"id":"hard_013","sequence":[9,81,729,6561],"missingIndex":2,"options":[243,351,450,729],"answer":729},
-    {"id":"hard_014","sequence":[2,12,72,432],"missingIndex":2,"options":[36,48,60,72],"answer":72},
-    {"id":"hard_015","sequence":[5,10,50,500],"missingIndex":2,"options":[25,35,45,50],"answer":50}
+    {
+      "id": "hard_001",
+      "sequence": [
+        2,
+        6,
+        18,
+        54
+      ],
+      "missingIndex": 2,
+      "options": [
+        12,
+        18,
+        24,
+        30
+      ],
+      "answer": 18
+    },
+    {
+      "id": "hard_002",
+      "sequence": [
+        1,
+        3,
+        9,
+        27
+      ],
+      "missingIndex": 2,
+      "options": [
+        6,
+        9,
+        12,
+        15
+      ],
+      "answer": 9
+    },
+    {
+      "id": "hard_003",
+      "sequence": [
+        4,
+        20,
+        100,
+        500
+      ],
+      "missingIndex": 2,
+      "options": [
+        50,
+        60,
+        80,
+        100
+      ],
+      "answer": 100
+    },
+    {
+      "id": "hard_004",
+      "sequence": [
+        9,
+        27,
+        81,
+        243
+      ],
+      "missingIndex": 2,
+      "options": [
+        45,
+        54,
+        72,
+        81
+      ],
+      "answer": 81
+    },
+    {
+      "id": "hard_005",
+      "sequence": [
+        3,
+        15,
+        75,
+        375
+      ],
+      "missingIndex": 2,
+      "options": [
+        45,
+        60,
+        75,
+        90
+      ],
+      "answer": 75
+    },
+    {
+      "id": "hard_006",
+      "sequence": [
+        5,
+        25,
+        125,
+        625
+      ],
+      "missingIndex": 2,
+      "options": [
+        75,
+        100,
+        125,
+        150
+      ],
+      "answer": 125
+    },
+    {
+      "id": "hard_007",
+      "sequence": [
+        2,
+        10,
+        50,
+        250
+      ],
+      "missingIndex": 2,
+      "options": [
+        30,
+        40,
+        50,
+        60
+      ],
+      "answer": 50
+    },
+    {
+      "id": "hard_008",
+      "sequence": [
+        6,
+        18,
+        54,
+        162
+      ],
+      "missingIndex": 2,
+      "options": [
+        27,
+        36,
+        45,
+        54
+      ],
+      "answer": 54
+    },
+    {
+      "id": "hard_009",
+      "sequence": [
+        7,
+        21,
+        63,
+        189
+      ],
+      "missingIndex": 2,
+      "options": [
+        42,
+        48,
+        56,
+        63
+      ],
+      "answer": 63
+    },
+    {
+      "id": "hard_010",
+      "sequence": [
+        8,
+        32,
+        128,
+        512
+      ],
+      "missingIndex": 2,
+      "options": [
+        64,
+        96,
+        128,
+        192
+      ],
+      "answer": 128
+    },
+    {
+      "id": "hard_011",
+      "sequence": [
+        4,
+        8,
+        32,
+        256
+      ],
+      "missingIndex": 2,
+      "options": [
+        16,
+        24,
+        32,
+        48
+      ],
+      "answer": 32
+    },
+    {
+      "id": "hard_012",
+      "sequence": [
+        3,
+        9,
+        27,
+        81
+      ],
+      "missingIndex": 2,
+      "options": [
+        18,
+        22,
+        27,
+        32
+      ],
+      "answer": 27
+    },
+    {
+      "id": "hard_013",
+      "sequence": [
+        9,
+        81,
+        729,
+        6561
+      ],
+      "missingIndex": 2,
+      "options": [
+        243,
+        351,
+        450,
+        729
+      ],
+      "answer": 729
+    },
+    {
+      "id": "hard_014",
+      "sequence": [
+        2,
+        12,
+        72,
+        432
+      ],
+      "missingIndex": 2,
+      "options": [
+        36,
+        48,
+        60,
+        72
+      ],
+      "answer": 72
+    },
+    {
+      "id": "hard_015",
+      "sequence": [
+        5,
+        10,
+        50,
+        500
+      ],
+      "missingIndex": 2,
+      "options": [
+        25,
+        35,
+        45,
+        50
+      ],
+      "answer": 50
+    }
   ]
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 
 class AppTheme {
@@ -42,7 +44,7 @@ class AppTheme {
           minimumSize: const Size.fromHeight(48),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          overlayColor: _primary.withOpacity(0.12),
+          overlayColor: _primary.withAlpha(31),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
@@ -55,8 +57,8 @@ class AppTheme {
         ).copyWith(
           overlayColor: MaterialStateProperty.resolveWith(
             (states) => states.contains(MaterialState.pressed)
-                ? _secondary.withOpacity(0.14)
-                : _secondary.withOpacity(0.08),
+                ? _secondary.withAlpha(36)
+                : _secondary.withAlpha(20),
           ),
         ),
       ),
@@ -68,11 +70,11 @@ class AppTheme {
         shadowColor: _secondary,
       ),
       chipTheme: ChipThemeData(
-        backgroundColor: _secondary.withOpacity(0.08),
+        backgroundColor: _secondary.withAlpha(20),
         labelStyle: const TextStyle(fontWeight: FontWeight.w700, color: _secondaryDark),
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        selectedColor: _primary.withOpacity(0.12),
+        selectedColor: _primary.withAlpha(31),
       ),
       snackBarTheme: const SnackBarThemeData(behavior: SnackBarBehavior.floating),
       useMaterial3: true,

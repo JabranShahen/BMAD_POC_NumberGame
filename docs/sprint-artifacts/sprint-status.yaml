@@ -39,8 +39,17 @@ development_status:
   epic-1: contexted
   1-1-difficulty-selection-session-start: done
   1-2-timed-puzzle-presentation: done
-  1-3-lives-and-game-over: review
-  1-4-feedback-and-controls: backlog
+  1-3-lives-and-game-over: done
+  1-4-feedback-and-controls: drafted
   1-4-palette-sunset-punch: done
   1-5-difficulty-button-color-theming: done
+  1-7-gameplay-emoji-parity-and-refined-curve: done
+  1-8-emoji-lives5-animation-bug: done
+  1-9-emoji-animation-loop-control: done
+  1-10-emoji-looping-per-screen: done
+  1-11-emoji-play-once-retrigger-bug: done
+  1-12-gameplay-ux-hud-polish: done
+  1-13-gameplay-ux-micro-polish: done
+  1-14-game-screen-layout-upgrade: done
+  1-15-gameplay-layout-realign: done
   epic-1-retrospective: optional

@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'package:flutter/material.dart';
 
 import '../../core/di.dart';
@@ -143,16 +145,16 @@ class _DifficultyCard extends StatelessWidget {
     const gold = Color(0xFFD6A21F);
     const neutral = Color(0xFFF0F2F5);
     final pressedColor = Color.lerp(fillColor, Colors.black, 0.10)!;
-    final focusColor = gold.withOpacity(0.35);
+    final focusColor = gold.withAlpha(89); // ~35%
     return Card(
       margin: EdgeInsets.zero,
       color: fillColor,
       surfaceTintColor: fillColor,
       child: InkWell(
         borderRadius: BorderRadius.circular(16),
-        splashColor: pressedColor.withOpacity(0.12),
+        splashColor: pressedColor.withAlpha(31),
         focusColor: focusColor,
-        hoverColor: pressedColor.withOpacity(0.08),
+        hoverColor: pressedColor.withAlpha(20),
         onTap: onTap,
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -170,7 +172,7 @@ class _DifficultyCard extends StatelessWidget {
                     const SizedBox(height: 6),
                     Text(
                       subtitle,
-                      style: TextStyle(fontSize: 14, color: Colors.white.withOpacity(0.9)),
+                      style: TextStyle(fontSize: 14, color: Colors.white.withAlpha(230)),
                     ),
                     const SizedBox(height: 10),
                     Row(
@@ -187,7 +189,7 @@ class _DifficultyCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.12),
+                  color: Colors.white.withAlpha(31),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(icon, size: 28, color: Colors.white),

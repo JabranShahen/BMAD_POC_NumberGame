@@ -1,0 +1,94 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>1</epicId>
+    <storyId>1.15</storyId>
+    <title>Gameplay Layout Realign to Centered Stack</title>
+    <status>ready-for-dev</status>
+    <generatedAt>2025-11-30</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/1-15-gameplay-layout-realign.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>player</asA>
+    <iWant>the gameplay UI stacked and centered (puzzle → avatar → timer/hearts/score → prompt → answers)</iWant>
+    <soThat>I can quickly focus on the puzzle without clutter or misaligned controls</soThat>
+    <tasks>
+      <![CDATA[
+- Restack gameplay_screen to centered column (puzzle → avatar → status row → prompt → answers), preserving gradient and max width. (AC1, AC3, AC4)
+- Increase heart icon size in the status row; ensure 5 slots and alignment with timer/score chips. (AC2)
+- Verify prompt and 2x2 answers sizing/spacing on small portrait screens; keep existing palette and shapes. (AC3, AC5)
+- Keep “End run” aligned bottom-right within the content column; confirm safe-area spacing. (AC4, AC5)
+- QA: Manual on small portrait device and larger device to confirm no horizontal scroll, timer urgency visibility, heart updates, score visibility. (AC5)
+- Testing: Add/verify widget tests for layout stack order and heart size/state; ensure no horizontal overflow. (AC1, AC2, AC3)
+- Testing: Run smoke on gameplay_screen to ensure timer urgency still visible and “End run” stays accessible. (AC4, AC5)
+      ]]>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <![CDATA[
+1. Puzzle card is centered above the avatar; avatar is centered above the status row.
+2. Status row centers timer chip (left), hearts (middle), score chip (right); hearts remain 5 slots and are visibly larger than the previous 22px icons.
+3. Prompt and 2x2 answers remain below, within the maxWidth column, using existing button styles/colors; no horizontal scroll on small portrait devices.
+4. “End run” link sits at the bottom-right of the content column.
+5. Layout fits small portrait screens without horizontal scroll; spacing matches the single-column reference with generous vertical padding.
+    ]]>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <![CDATA[
+- docs/tech-spec.md#UX-change-spec-—-Gameplay-layout-update
+- docs/ux-design-specification.md
+- docs/architecture.md
+- docs/sprint-artifacts/sprint-status.yaml
+- docs/sprint-artifacts/1-15-gameplay-layout-realign.md
+      ]]>
+    </docs>
+    <code>
+      <![CDATA[
+- funnums/lib/features/gameplay/gameplay_screen.dart
+- funnums/lib/features/gameplay/widgets/emoji_avatar.dart
+      ]]>
+    </code>
+    <dependencies>
+      <![CDATA[
+- Flutter widgets/material; no new external deps expected
+      ]]>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <![CDATA[
+- Keep existing palette/components; layout realign only.
+- Preserve non-blocking gameplay: timer urgency styling and hearts decrement must remain intact.
+- Portrait-first; ensure no horizontal scroll on small devices; honor SafeArea.
+    ]]>
+  </constraints>
+  <interfaces>
+    <![CDATA[
+- Reuse existing AnswerButton and EmojiAvatarWidget; no new interfaces expected.
+    ]]>
+  </interfaces>
+  <tests>
+    <standards>
+      <![CDATA[
+- Add/verify widget tests for layout stack and heart sizing; avoid horizontal overflow.
+- Manual QA on small portrait and a larger device; confirm timer urgency visibility and End run accessibility.
+      ]]>
+    </standards>
+    <locations>
+      <![CDATA[
+- funnums/test/ (widget tests for gameplay_screen layout)
+      ]]>
+    </locations>
+    <ideas>
+      <![CDATA[
+- Snapshot/layout test to verify order: puzzle card → avatar → status row → prompt → answers.
+- Widget test to assert heart icons render 5 slots and increased size.
+- Manual check on smallest target device for scroll/fit.
+      ]]>
+    </ideas>
+  </tests>
+</story-context>

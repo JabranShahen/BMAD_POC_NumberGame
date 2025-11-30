@@ -3,7 +3,6 @@ import '../models/session_stats.dart';
 import '../models/settings.dart';
 
 /// Stub persistence for session stats/history.
-/// TODO: Wire to StorageService with Hive/JSON and versioning.
 class SessionRepository {
   SessionRepository(this._storage);
 
@@ -68,8 +67,7 @@ class SessionRepository {
 
   Future<void> save(SessionStats stats) async {
     await saveBestScore(stats.mode, stats.score);
-    // TODO: Persist full stats/history.
-  }
+      }
 }
 
 class SettingsRepository {

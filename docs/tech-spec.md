@@ -6,6 +6,10 @@
 
 ---
 
+## UX Handoff Notes (for SM/Dev)
+- 2025-11-30 (with Jabran): Ready for story — Gameplay layout realign to centered stack. Use AC1–AC5 in the “UX change spec — Gameplay layout update” section below. Status/state is tracked in docs/sprint-artifacts/sprint-status.yaml.
+- 2025-11-30: Story drafted at docs/sprint-artifacts/1-15-gameplay-layout-realign.md; sprint-status updated to drafted.
+
 ## 1) Problem / Need
 - Build a fast, offline-friendly missing-number puzzle loop with clear timers, lives, and immediate feedback.
 - Persist scores/bests/history/settings locally; avoid repeat puzzles in short runs.
@@ -117,10 +121,36 @@ flutter run --flavor dev
 - Target Android/iOS, portrait-only (lock orientation in AndroidManifest and Info.plist).
 - CI: flutter format --set-exit-if-changed; flutter analyze; flutter test; build per platform. Fail build on test failures. Lint via flutter_lints.
 
-## 13) Stories (for this quick spec, 3)
+## 13) Stories (for this quick spec)
 1) Gameplay loop & timers/lives/feedback: implement gameplay_screen/controller, timer constants, urgency cues, auto-advance, game over summary.  
 2) Persistence & history: storage init, repositories, history screen, best/solved counts, settings toggles persistence, corruption reset.  
-3) Offline awareness (optional): connectivity service and banner, ensure gameplay unaffected without network.
+3) Offline awareness (optional): connectivity service and banner, ensure gameplay unaffected without network.  
+4) Gameplay layout realign to centered stack (UX): restack gameplay_screen to match the reference layout (puzzle card → avatar → timer/hearts/score row → prompt → answers grid; End run bottom-right).
+
+## 14) UX change spec — Gameplay layout update
+**Goal:** Align gameplay_screen layout to the provided reference while keeping existing palette/components.
+
+**Target layout (top to bottom, centered column within maxWidth=520):**
+- Puzzle card: centered pill with light shadow, single row of sequence blocks, missing slot highlighted.
+- Emoji avatar: centered directly beneath puzzle card, use existing EmojiAvatarWidget hero sizing.
+- Status row: centered row containing timer chip (left), hearts (middle, 5 slots), score chip (right); slightly larger heart icons than current.
+- Prompt: “Find the missing number” label left-aligned within the column.
+- Answers: 2x2 grid, same rounding/palette and sizing as current; no horizontal scroll on small portrait devices.
+- End run link: aligned bottom-right of the content column.
+
+**Acceptance criteria (layout):**
+- AC1: Puzzle card is centered above the avatar; avatar is centered above the status row.
+- AC2: Status row centers timer chip (left), hearts (middle), score chip (right); hearts remain 5 slots and visibly larger than current 22px icons.
+- AC3: Prompt and 2x2 answers remain below, within the maxWidth column, using existing button styles/colors.
+- AC4: “End run” link sits at the bottom-right of the content column.
+- AC5: Layout fits small portrait screens without horizontal scroll; spacing consistent with reference (single column, generous vertical padding).
+
+**QA notes:**
+- Verify on small portrait (e.g., iPhone SE/Pixel 4a) and a larger device.
+- Check timer urgency state visibility, hearts decrement, score updates, and avatar renders.
+- Ensure safe-area padding and no overlap with system bars; scroll still works when content exceeds viewport.
+
+**Dependencies/Risks:** None; visual regression risk on tablets—spot-check on a larger simulator.
 
 ---
 

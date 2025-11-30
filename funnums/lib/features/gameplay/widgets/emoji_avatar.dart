@@ -1,7 +1,4 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';
 
 /// Emoji avatar that mirrors player state with optional animated assets and
@@ -14,6 +11,8 @@ class EmojiAvatarWidget extends StatefulWidget {
     required this.gameOver,
     required this.isDifficultyScreen,
     this.reduceMotion,
+    this.useHeroSize = false,
+    this.loop = true,
   });
 
   final int lives;
@@ -21,6 +20,8 @@ class EmojiAvatarWidget extends StatefulWidget {
   final bool gameOver;
   final bool isDifficultyScreen;
   final bool? reduceMotion;
+  final bool useHeroSize;
+  final bool loop;
 
   @override
   State<EmojiAvatarWidget> createState() => _EmojiAvatarWidgetState();
@@ -30,38 +31,28 @@ class _EmojiAvatarWidgetState extends State<EmojiAvatarWidget> {
   static const _assetMap = {
     'difficulty': 'assets/animated_emoji/-grinning-.json',
     'welcome': 'assets/animated_emoji/-hug-face-.json',
-    'lives5': 'assets/animated_emoji/-laughing-.json',
+    'lives5': 'assets/animated_emoji/-smile-.json',
     'lives4': 'assets/animated_emoji/-smile-.json',
     'lives3': 'assets/animated_emoji/-grimacing-.json',
     'lives2': 'assets/animated_emoji/-flushed-.json',
     'lives1': 'assets/animated_emoji/-scared-.json',
-    'panic': 'assets/animated_emoji/-cold-face-.json',
     'gameover': 'assets/animated_emoji/-dizzy-face-.json',
   };
 
   static const _emojiMap = {
-    'difficulty': '😀',
-    'welcome': '🤗',
-    'lives5': '😁',
-    'lives4': '😊',
-    'lives3': '😬',
-    'lives2': '😳',
-    'lives1': '😨',
-    'panic': '😰',
-    'gameover': '😵',
+    'difficulty': '😊',
+    'welcome': '😊',
+    'lives5': '🙂', // calm, confident
+    'lives4': '😊', // soft smile, doing fine
+    'lives3': '😕', // concerned / unsure
+    'lives2': '😰', // worried / stressed
+    'lives1': '😱', // fear / panic
+    'gameover': '😵', // dizzy / game-over
   };
-
-  final Map<String, Future<bool>> _assetExistsCache = {};
 
   String _stateKey() {
     if (widget.gameOver || widget.lives <= 0) return 'gameover';
-    if (widget.isDifficultyScreen) {
-      print('DEBUG: isDifficultyScreen=true, returning welcome');
-      return 'welcome';
-    }
-    if (widget.remainingSeconds > 0 && widget.remainingSeconds <= 3) {
-      return 'panic';
-    }
+    if (widget.isDifficultyScreen) return 'welcome';
     switch (widget.lives) {
       case 5:
         return 'lives5';
@@ -78,63 +69,41 @@ class _EmojiAvatarWidgetState extends State<EmojiAvatarWidget> {
     }
   }
 
-  Future<bool> _assetExists(String asset) {
-    return _assetExistsCache.putIfAbsent(asset, () async {
-      try {
-        await rootBundle.load(asset);
-        return true;
-      } catch (_) {
-        return false;
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final key = _stateKey();
     final asset = _assetMap[key];
-    final emoji = _emojiMap[key] ?? '😀';
+    final emoji = _emojiMap[key] ?? '🙂';
     final reduceMotion = widget.reduceMotion ?? MediaQuery.of(context).disableAnimations;
-    final hero = widget.isDifficultyScreen || widget.gameOver;
+    final hero = widget.isDifficultyScreen || widget.gameOver || widget.useHeroSize;
     final size = hero ? 96.0 : 56.0;
-    final bgColor = Theme.of(context).colorScheme.secondary.withOpacity(0.12);
-    final borderColor = Theme.of(context).colorScheme.secondary.withOpacity(0.35);
+    final bgColor = Theme.of(context).colorScheme.secondary.withAlpha(31); // ~12%
+
     final semantic = _semanticLabel(emoji);
 
     return Semantics(
       label: semantic,
-      child: Container(
+      child: SizedBox(
         width: size,
         height: size,
-        decoration: BoxDecoration(
-          color: bgColor,
-          shape: BoxShape.circle,
-          border: Border.all(color: borderColor),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 8,
-              offset: const Offset(0, 3),
-            ),
-          ],
-        ),
         child: Center(
-          child: asset == null
-            ? Text(
-                emoji,
-                style: TextStyle(fontSize: hero ? 208 : 112),
-              )
-            : Lottie.asset(
-                asset,
-                width: size * 0.8,
-                height: size * 0.8,
-                repeat: true,
-                frameRate: FrameRate.max,
-                errorBuilder: (_, __, ___) => Text(
+          child: reduceMotion || asset == null
+              ? Text(
                   emoji,
                   style: TextStyle(fontSize: hero ? 208 : 112),
+                )
+              : Lottie.asset(
+                  asset,
+                  width: size * 0.8,
+                  height: size * 0.8,
+                  repeat: widget.loop,
+                  key: ValueKey('state-$key-${widget.lives}-${widget.gameOver}'),
+                  frameRate: FrameRate.max,
+                  errorBuilder: (_, __, ___) => Text(
+                    emoji,
+                    style: TextStyle(fontSize: hero ? 208 : 112),
+                  ),
                 ),
-              ),
         ),
       ),
     );
@@ -142,9 +111,6 @@ class _EmojiAvatarWidgetState extends State<EmojiAvatarWidget> {
 
   String _semanticLabel(String emoji) {
     if (widget.gameOver || widget.lives <= 0) return '$emoji avatar, game over';
-    if (widget.remainingSeconds > 0 && widget.remainingSeconds <= 3) {
-      return '$emoji avatar, timer critical, ${widget.lives} lives left';
-    }
     return '$emoji avatar, ${widget.lives} lives left';
   }
 }

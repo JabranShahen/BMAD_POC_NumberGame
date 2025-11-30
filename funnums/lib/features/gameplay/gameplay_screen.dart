@@ -11,7 +11,17 @@ import '../../data/models/settings.dart';
 import '../../data/sources/session_repository.dart';
 import 'game_over_screen.dart';
 import 'gameplay_controller.dart';
+import 'widgets/answer_button.dart';
 import 'widgets/emoji_avatar.dart';
+
+// Palette for upgraded layout
+const _lynxWhite = Color(0xFFF5F6F8);
+const _vanadylBlue = Color(0xFF6A8FD8);
+const _periwinkle = Color(0xFFDDE6FF);
+const _blueberrySoda = Color(0xFFA5B4FF);
+const _skirretGreen = Color(0xFF38B48C);
+const _nasturcianFlower = Color(0xFFE86A33);
+const _mazarineBlue = Color(0xFF273469);
 
 class GameplayScreen extends StatefulWidget {
   const GameplayScreen({super.key});
@@ -28,6 +38,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
   int _remaining = 0;
   int _lives = 5;
   int _score = 0;
+  int? _selectedAnswer;
   bool _soundEnabled = true;
   bool _hapticsEnabled = true;
   _FeedbackState _feedback = _FeedbackState.idle;
@@ -42,7 +53,10 @@ class _GameplayScreenState extends State<GameplayScreen> {
     _controller = GameplayController(
       mode: _mode,
       puzzleService: PuzzleService(),
-      onPuzzle: (p) => setState(() => _puzzle = p),
+      onPuzzle: (p) => setState(() {
+        _puzzle = p;
+        _selectedAnswer = null;
+      }),
       onTick: (remaining, lives) => setState(() {
         _remaining = remaining;
         _lives = lives;
@@ -73,6 +87,9 @@ class _GameplayScreenState extends State<GameplayScreen> {
   }
 
   void _onAnswer(int value) {
+    setState(() {
+      _selectedAnswer = value;
+    });
     _controller.answer(value);
     _showFeedback(value == _controller.current?.answer);
   }
@@ -163,66 +180,111 @@ class _GameplayScreenState extends State<GameplayScreen> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Wrap(
-                    spacing: 12,
-                    runSpacing: 8,
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
-                      _TimerChip(remaining: _remaining, urgent: urgent),
-                      _LivesRow(lives: _lives),
-                      _ScoreChip(score: _score),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 12),
-                EmojiAvatarWidget(
-                  lives: _lives,
-                  remainingSeconds: _remaining,
-                  gameOver: false,
-                  isDifficultyScreen: false,
-                ),
-              ],
-            ),
-            const SizedBox(height: 12),
-            const Text('Find the missing number', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700)),
-            const SizedBox(height: 12),
-            if (_puzzle != null) _PuzzleCard(puzzle: _puzzle!, feedback: _feedback),
-            const SizedBox(height: 16),
-            if (_puzzle != null)
-              Wrap(
-                spacing: 12,
-                runSpacing: 12,
-                children: _puzzle!.options
-                    .map((opt) => ElevatedButton(
-                          onPressed: () => _onAnswer(opt),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                            child: Text(
-                              opt.toString(),
-                              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [_periwinkle, _lynxWhite],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.fromLTRB(16, 20, 16, 24),
+            child: Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 520),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    if (_puzzle != null)
+                      _PuzzleCard(
+                        puzzle: _puzzle!,
+                        feedback: _feedback,
+                      ),
+                    const SizedBox(height: 24),
+                    EmojiAvatarWidget(
+                      lives: _lives,
+                      remainingSeconds: _remaining,
+                      gameOver: false,
+                      isDifficultyScreen: false,
+                      useHeroSize: true,
+                      loop: false,
+                    ),
+                    const SizedBox(height: 18),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        _TimerChip(remaining: _remaining, urgent: urgent),
+                        const SizedBox(width: 14),
+                        _LivesRow(lives: _lives, iconSize: 28),
+                        const SizedBox(width: 14),
+                        _ScoreChip(score: _score),
+                      ],
+                    ),
+                    const SizedBox(height: 24),
+                    const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Find the missing number',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                          color: _mazarineBlue,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 14),
+                    if (_puzzle != null)
+                      GridView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: _puzzle!.options.length,
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 12,
+                          crossAxisSpacing: 12,
+                          childAspectRatio: 2.6,
+                        ),
+                        itemBuilder: (context, index) {
+                          final opt = _puzzle!.options[index];
+                          final isCorrect = _puzzle!.answer == opt;
+                          final isSelected = _selectedAnswer == opt;
+                          return AnswerButton(
+                            label: opt.toString(),
+                            onTap: () => _onAnswer(opt),
+                            isCorrect: isCorrect,
+                            isSelected: isSelected,
+                            showResult: _selectedAnswer != null,
+                            palette: const AnswerPalette(
+                              base: _vanadylBlue,
+                              correct: _skirretGreen,
+                              incorrect: _nasturcianFlower,
+                              text: Colors.white,
                             ),
-                          ),
-                        ))
-                    .toList(),
-              ),
-            const Spacer(),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: TextButton(
-                onPressed: () => _goToGameOver(_controller.score),
-                child: const Text('End run'),
+                          );
+                        },
+                      ),
+                    const SizedBox(height: 20),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        onPressed: () => _goToGameOver(_controller.score),
+                        style: TextButton.styleFrom(
+                          foregroundColor: _vanadylBlue,
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                        ),
+                        child: const Text(
+                          'End run',
+                          style: TextStyle(fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ],
+          ),
         ),
       ),
     );
@@ -244,7 +306,7 @@ class _PuzzleCard extends StatelessWidget {
       display.add(Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-          color: isMissing ? colors.secondary.withOpacity(0.12) : Colors.white,
+          color: isMissing ? _blueberrySoda.withAlpha(40) : Colors.white,
           borderRadius: BorderRadius.circular(8),
           border: Border.all(color: Colors.grey.shade300),
         ),
@@ -253,7 +315,7 @@ class _PuzzleCard extends StatelessWidget {
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
-            color: isMissing ? colors.secondary : colors.onSurface,
+            color: isMissing ? _vanadylBlue : colors.onSurface,
           ),
         ),
       ));
@@ -263,7 +325,7 @@ class _PuzzleCard extends StatelessWidget {
     }
 
     final bgColor = feedback == _FeedbackState.correct
-        ? colors.primary.withOpacity(0.08)
+        ? colors.primary.withAlpha(20)
         : feedback == _FeedbackState.wrong
             ? Colors.red.shade50
             : null;
@@ -285,13 +347,15 @@ class _TimerChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = urgent ? Colors.red.shade600 : Theme.of(context).colorScheme.primary;
+    const base = _vanadylBlue;
+    final bg = urgent ? _nasturcianFlower.withAlpha(28) : base.withAlpha(24);
+    final textColor = urgent ? _nasturcianFlower : base;
     final text = remaining > 0 ? '$remaining s' : 'Time';
     return Chip(
-      backgroundColor: color.withAlpha(38),
+      backgroundColor: bg,
       label: Text(
         text,
-        style: TextStyle(color: color, fontWeight: FontWeight.w700),
+        style: TextStyle(color: textColor, fontWeight: FontWeight.w700),
       ),
     );
   }
@@ -299,22 +363,27 @@ class _TimerChip extends StatelessWidget {
 
 class _LivesRow extends StatelessWidget {
   final int lives;
-  const _LivesRow({required this.lives});
+  final double iconSize;
+  const _LivesRow({required this.lives, this.iconSize = 22});
 
   @override
   Widget build(BuildContext context) {
-    final primary = Theme.of(context).colorScheme.primary;
-    return Row(
-      children: List.generate(5, (index) {
-        final active = index < lives;
-        return Padding(
-          padding: const EdgeInsets.only(left: 4),
-          child: Icon(
-            active ? Icons.favorite : Icons.favorite_border,
-            color: active ? primary : Colors.grey,
-          ),
-        );
-      }),
+    const primary = _vanadylBlue;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 2),
+      child: Row(
+        children: List.generate(5, (index) {
+          final active = index < lives;
+          return Padding(
+            padding: const EdgeInsets.only(left: 4),
+            child: Icon(
+              active ? Icons.favorite : Icons.favorite_border,
+              color: active ? primary : Colors.grey,
+              size: iconSize,
+            ),
+          );
+        }),
+      ),
     );
   }
 }
@@ -325,12 +394,12 @@ class _ScoreChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final secondary = Theme.of(context).colorScheme.secondary;
+    const secondary = _vanadylBlue;
     return Chip(
-      backgroundColor: secondary.withOpacity(0.10),
+      backgroundColor: secondary.withAlpha(22),
       label: Text(
         'Score: $score',
-        style: TextStyle(color: secondary, fontWeight: FontWeight.w700),
+        style: const TextStyle(color: _vanadylBlue, fontWeight: FontWeight.w700),
       ),
     );
   }
